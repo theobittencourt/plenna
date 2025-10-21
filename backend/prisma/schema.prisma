@@ -1,0 +1,315 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                      Int       @id @default(autoincrement())
+  name                    String
+  email                   String    @unique
+  emailVerifiedAt         DateTime? @map("email_verified_at")
+  password                String
+  cpfCnpj                 String?   @map("cpf_cnpj")
+  dataNascimento          String?   @map("data_nascimento")
+  telefone                String?
+  saldo                   Float     @default(0.00)
+  totalTransacoes         Int       @default(0) @map("total_transacoes")
+  avatar                  String?
+  status                  Boolean   @default(false)
+  dataCadastro            DateTime  @default(now()) @map("data_cadastro")
+  ipUser                  String?   @map("ip_user")
+  transacoesAproved       Int       @default(0) @map("transacoes_aproved")
+  transacoesRecused       Int       @default(0) @map("transacoes_recused")
+  valorSacado             Decimal   @default(0.00) @map("valor_sacado") @db.Decimal(10, 2)
+  valorSaquePendente      Decimal   @default(0.00) @map("valor_saque_pendente") @db.Decimal(10, 2)
+  taxaCashIn              Decimal   @default(0.00) @map("taxa_cash_in") @db.Decimal(10, 2)
+  taxaCashOut             Decimal   @default(0.00) @map("taxa_cash_out") @db.Decimal(10, 2)
+  taxaCashInFixa          Decimal   @default(0.00) @map("taxa_cash_in_fixa") @db.Decimal(10, 2)
+  taxaCashOutFixa         Decimal   @default(0.00) @map("taxa_cash_out_fixa") @db.Decimal(10, 2)
+  token                   String?   @unique
+  banido                  Boolean   @default(false)
+  clienteId               String    @map("cliente_id")
+  taxaPercentual          Decimal   @default(5.00) @map("taxa_percentual") @db.Decimal(10, 2)
+  volumeTransacional      Decimal   @default(0.00) @map("volume_transacional") @db.Decimal(10, 2)
+  valorPagoTaxa           Decimal   @default(0.00) @map("valor_pago_taxa") @db.Decimal(10, 2)
+  userId                  String?   @unique @map("user_id")
+  cep                     String?
+  rua                     String?
+  estado                  String?
+  cidade                  String?
+  bairro                  String?
+  numeroResidencia        String?   @map("numero_residencia")
+  complemento             String?
+  fotoRgFrente            String?   @map("foto_rg_frente")
+  fotoRgVerso             String?   @map("foto_rg_verso")
+  selfieRg                String?   @map("selfie_rg")
+  mediaFaturamento        String?   @map("media_faturamento")
+  indicadorRef            String?   @map("indicador_ref")
+  whitelistedIp           String?   @map("whitelisted_ip")
+  pushcutPixpago          String?   @map("pushcut_pixpago")
+  twofaSecret             String?   @map("twofa_secret")
+  codeRef                 String?   @unique @map("code_ref")
+  gerenteId               Int?      @map("gerente_id")
+  gerentePercentage       Decimal?  @map("gerente_percentage") @db.Decimal(10, 2)
+  gerenteAprovar          Boolean   @default(false) @map("gerente_aprovar")
+  webhookUrl              String?   @map("webhook_url")
+  webhookEndpoint         Json?     @map("webhook_endpoint")
+  integracaoUtmfy         String?   @map("integracao_utmfy")
+  permission              String    @default("user")
+  username                String?   @unique
+  createdAt               DateTime  @default(now()) @map("created_at")
+  updatedAt               DateTime  @updatedAt @map("updated_at")
+
+  checkouts               CheckoutBuild[]
+  depositos               Solicitacao[]
+  saques                  SolicitacaoCashOut[]
+  transactions            Transaction[]
+  usersKey                UsersKey?
+  indicados               User[]    @relation("UserIndicacao")
+  indicador               User?     @relation("UserIndicacao", fields: [indicadorRef], references: [codeRef])
+
+  @@map("users")
+}
+
+model UsersKey {
+  id              Int      @id @default(autoincrement())
+  userId          String   @unique @map("user_id")
+  token           String   @unique
+  secret          String
+  ipPermitido     String?  @map("ip_permitido")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  user            User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  @@map("users_keys")
+}
+
+model App {
+  id                              Int      @id @default(autoincrement())
+  gatewayName                     String?  @map("gateway_name")
+  gatewayLogo                     String?  @map("gateway_logo")
+  gatewayFavicon                  String?  @map("gateway_favicon")
+  gatewayBannerHome               String?  @map("gateway_banner_home")
+  gatewayColor                    String?  @map("gateway_color")
+  numeroUsers                     Int      @default(0) @map("numero_users")
+  faturamentoTotal                Decimal  @default(0.00) @map("faturamento_total") @db.Decimal(10, 2)
+  totalTransacoes                 Decimal  @default(0.00) @map("total_transacoes") @db.Decimal(10, 2)
+  visitantes                      Int      @default(0)
+  manutencao                      Boolean  @default(false)
+  baseline                        String?
+  taxaCashInPadrao                Decimal  @default(4.00) @map("taxa_cash_in_padrao") @db.Decimal(10, 2)
+  taxaCashOutPadrao               Decimal  @default(4.00) @map("taxa_cash_out_padrao") @db.Decimal(10, 2)
+  taxaFixaPadrao                  Decimal  @default(5.00) @map("taxa_fixa_padrao") @db.Decimal(10, 2)
+  taxaFixaPadraoCashOut           Decimal  @default(5.00) @map("taxa_fixa_padrao_cash_out") @db.Decimal(10, 2)
+  taxaPixValorRealCashInPadrao    Decimal  @default(5.00) @map("taxa_pix_valor_real_cash_in_padrao") @db.Decimal(10, 2)
+  limiteSaqueMensal               Decimal? @map("limite_saque_mensal") @db.Decimal(10, 2)
+  limiteSaqueAutomatico           Decimal? @map("limite_saque_automatico") @db.Decimal(10, 2)
+  depositoMinimo                  Decimal? @map("deposito_minimo") @db.Decimal(10, 2)
+  saqueMinimo                     Decimal? @map("saque_minimo") @db.Decimal(10, 2)
+  contato                         String?
+  cnpj                            String?
+  niveisAtivo                     Boolean  @default(false) @map("niveis_ativo")
+  gerenteActive                   Boolean  @default(false) @map("gerente_active")
+  gerentePercentage               Decimal? @map("gerente_percentage") @db.Decimal(10, 2)
+  saquesAutomaticos               Boolean  @default(false) @map("saques_automaticos")
+  createdAt                       DateTime @default(now()) @map("created_at")
+  updatedAt                       DateTime @updatedAt @map("updated_at")
+
+  @@map("app")
+}
+
+model CheckoutBuild {
+  id                          Int       @id @default(autoincrement())
+  idUnico                     String    @unique @map("id_unico")
+  userId                      String    @map("user_id")
+  produtoName                 String    @map("produto_name")
+  produtoDescricao            String?   @map("produto_descricao") @db.Text
+  descricaoExtra              String?   @map("descricao_extra") @db.Text
+  produtoValor                Decimal   @map("produto_valor") @db.Decimal(10, 2)
+  produtoDeValor              Decimal?  @map("produto_de_valor") @db.Decimal(10, 2)
+  produtoCategoria            String?   @map("produto_categoria")
+  produtoTipo                 String?   @map("produto_tipo")
+  produtoTipoCob              String?   @map("produto_tipo_cob")
+  produtoImage                String?   @map("produto_image")
+  whatsappSuporte             String?   @map("whatsapp_suporte")
+  emailSuporte                String?   @map("email_suporte")
+  checkoutColor               String?   @map("checkout_color")
+  checkoutColorDefault        String?   @map("checkout_color_default")
+  checkoutColorCard           String?   @map("checkout_color_card")
+  checkoutTimerActive         Boolean   @default(false) @map("checkout_timer_active")
+  checkoutTimerTempo          Int?      @map("checkout_timer_tempo")
+  checkoutTimerCorFundo       String?   @map("checkout_timer_cor_fundo")
+  checkoutTimerCorTexto       String?   @map("checkout_timer_cor_texto")
+  checkoutTimerTexto          String?   @map("checkout_timer_texto")
+  checkoutHeaderLogoActive    Boolean   @default(false) @map("checkout_header_logo_active")
+  checkoutHeaderLogo          String?   @map("checkout_header_logo")
+  checkoutHeaderImageActive   Boolean   @default(false) @map("checkout_header_image_active")
+  checkoutHeaderImage         String?   @map("checkout_header_image")
+  checkoutBannerActive        Boolean   @default(false) @map("checkout_banner_active")
+  checkoutBanner              String?   @map("checkout_banner")
+  checkoutTopbarActive        Boolean   @default(false) @map("checkout_topbar_active")
+  checkoutTopbarText          String?   @map("checkout_topbar_text")
+  checkoutTopbarTextColor     String?   @map("checkout_topbar_text_color")
+  checkoutTopbarColor         String?   @map("checkout_topbar_color")
+  urlPaginaVendas             String?   @map("url_pagina_vendas")
+  periodoGarantia             Int?      @map("periodo_garantia")
+  checkoutAdsMeta             String?   @map("checkout_ads_meta")
+  checkoutAdsGoogle           String?   @map("checkout_ads_google")
+  checkoutAdsTiktok           String?   @map("checkout_ads_tiktok")
+  checkoutAdsUtmfy            String?   @map("checkout_ads_utmfy")
+  status                      Boolean   @default(true)
+  methods                     Json?
+  createdAt                   DateTime  @default(now()) @map("created_at")
+  updatedAt                   DateTime  @updatedAt @map("updated_at")
+
+  user                        User      @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  bumps                       CheckoutOrderBump[]
+  depoimentos                 CheckoutDepoimento[]
+  orders                      CheckoutOrder[]
+
+  @@map("checkout_build")
+}
+
+model CheckoutOrderBump {
+  id              Int      @id @default(autoincrement())
+  checkoutId      Int      @map("checkout_id")
+  nome            String
+  descricao       String?  @db.Text
+  valor           Decimal  @db.Decimal(10, 2)
+  imagem          String?
+  ativo           Boolean  @default(true)
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  checkout        CheckoutBuild @relation(fields: [checkoutId], references: [id], onDelete: Cascade)
+
+  @@map("checkout_order_bumps")
+}
+
+model CheckoutDepoimento {
+  id              Int      @id @default(autoincrement())
+  checkoutId      Int      @map("checkout_id")
+  nome            String
+  depoimento      String   @db.Text
+  imagem          String?
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  checkout        CheckoutBuild @relation(fields: [checkoutId], references: [id], onDelete: Cascade)
+
+  @@map("checkout_depoimentos")
+}
+
+model CheckoutOrder {
+  id                Int      @id @default(autoincrement())
+  checkoutId        Int      @map("checkout_id")
+  idTransaction     String?  @map("id_transaction")
+  paymentCode       String?  @map("payment_code")
+  clienteNome       String   @map("cliente_nome")
+  clienteEmail      String   @map("cliente_email")
+  clienteCpf        String   @map("cliente_cpf")
+  clienteTelefone   String   @map("cliente_telefone")
+  valor             Decimal  @db.Decimal(10, 2)
+  status            String   @default("pending")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  checkout          CheckoutBuild @relation(fields: [checkoutId], references: [id], onDelete: Cascade)
+
+  @@map("checkout_orders")
+}
+
+model Solicitacao {
+  id                  Int      @id @default(autoincrement())
+  userId              String   @map("user_id")
+  valor               Decimal  @db.Decimal(10, 2)
+  valorLiquido        Decimal  @map("valor_liquido") @db.Decimal(10, 2)
+  taxaCashIn          Decimal  @map("taxa_cash_in") @db.Decimal(10, 2)
+  status              String
+  idTransaction       String?  @map("id_transaction")
+  externalreference   String?
+  paymentCode         String?  @map("payment_code")
+  qrCode              String?  @map("qr_code") @db.Text
+  qrCodeImage         String?  @map("qr_code_image") @db.Text
+  methodPay           String?  @map("method_pay")
+  debtorName          String?  @map("debtor_name")
+  debtorDocument      String?  @map("debtor_document")
+  debtorEmail         String?  @map("debtor_email")
+  debtorPhone         String?  @map("debtor_phone")
+  postback            String?  @db.Text
+  adquirente          String?
+  daysAvailability    Int?     @map("days_availability")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  user                User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  @@map("solicitacoes")
+}
+
+model SolicitacaoCashOut {
+  id                Int       @id @default(autoincrement())
+  userId            String    @map("user_id")
+  referencia        String?
+  valor             Decimal   @db.Decimal(10, 2)
+  valorLiquido      Decimal   @map("valor_liquido") @db.Decimal(10, 2)
+  tipoChave         String    @map("tipo_chave")
+  chave             String
+  status            String
+  dataSolicitacao   DateTime  @default(now()) @map("data_solicitacao")
+  dataPagamento     DateTime? @map("data_pagamento")
+  taxaCashOut       Decimal   @map("taxa_cash_out") @db.Decimal(10, 2)
+  idTransaction     String?   @map("id_transaction")
+  adquirente        String?
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+
+  user              User      @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  @@map("solicitacoes_cash_out")
+}
+
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  userId      String   @map("user_id")
+  price       Decimal  @db.Decimal(20, 2)
+  status      Int
+  reference   String
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  user        User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  @@map("transactions")
+}
+
+model Adquirente {
+  id          Int      @id @default(autoincrement())
+  referencia  String   @unique
+  nome        String
+  status      Boolean  @default(false)
+  config      Json?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("adquirentes")
+}
+
+model Nivel {
+  id              Int      @id @default(autoincrement())
+  nome            String
+  volumeMinimo    Decimal  @map("volume_minimo") @db.Decimal(10, 2)
+  volumeMaximo    Decimal  @map("volume_maximo") @db.Decimal(10, 2)
+  taxaCashIn      Decimal  @map("taxa_cash_in") @db.Decimal(10, 2)
+  taxaCashOut     Decimal  @map("taxa_cash_out") @db.Decimal(10, 2)
+  ativo           Boolean  @default(true)
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("nivels")
+}
