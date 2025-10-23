@@ -6,8 +6,8 @@
       <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
         <div class="text-center">
           <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
-            Pagamentos PIX
-            <span class="block text-white/90">Simplificados</span>
+            Sua plataforma de pagamentos simplificados
+            <span class="block text-white/90"></span>
           </h1>
           <p class="text-xl text-white/90 mb-8 max-w-3xl mx-auto animate-slide-up">
             Sistema completo de pagamentos PIX com múltiplos adquirentes, checkouts personalizados e gestão financeira avançada.

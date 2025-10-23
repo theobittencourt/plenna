@@ -3,9 +3,6 @@
     <div class="max-w-md w-full space-y-8 animate-scale-in">
       <!-- Header -->
       <div class="text-center">
-        <div class="flex justify-center mb-6">
-          <img src="../../assets/logo.png" alt="Plenna" class="h-24 w-auto" />
-        </div>
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Criar sua conta</h2>
         <p class="text-gray-600 dark:text-gray-400">Comece a usar gratuitamente</p>
       </div>

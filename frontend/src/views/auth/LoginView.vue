@@ -3,9 +3,6 @@
     <div class="max-w-md w-full space-y-8 animate-scale-in">
       <!-- Header -->
       <div class="text-center">
-        <div class="flex justify-center mb-6">
-          <img src="../../assets/logo.png" alt="Plenna" class="h-24 w-auto" />
-        </div>
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Entrar na sua conta</h2>
         <p class="text-gray-600 dark:text-gray-400">Acesse seu painel</p>
       </div>
@@ -15,14 +12,14 @@
         <form @submit.prevent="handleLogin" class="space-y-6">
           <div class="space-y-4">
             <div>
-              <label for="login" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email ou Usuário</label>
+              <label for="login" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
               <input
                 id="login"
                 v-model="form.login"
                 type="text"
                 required
                 class="input-field"
-                placeholder="seu@email.com ou usuário"
+                placeholder="seuemail@gmail.com"
                 :disabled="loading"
               />
             </div>

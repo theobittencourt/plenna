@@ -7,7 +7,7 @@
             <img src="../assets/logo.png" alt="Plenna" class="h-12 w-auto" />
           </div>
           <p class="text-gray-600 dark:text-gray-400 mb-4 max-w-md">
-            Sistema completo de pagamentos PIX com múltiplos adquirentes, checkouts personalizados e gestão financeira avançada.
+            Sistema completo de pagamentos com múltiplos adquirentes, checkouts personalizados e gestão financeira avançada.
           </p>
           <div class="flex space-x-4">
             <a href="#" class="text-gray-400 dark:text-gray-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
