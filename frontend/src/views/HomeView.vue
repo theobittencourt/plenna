@@ -4,7 +4,7 @@
     
     <main>
       <!-- Hero Section -->
-      <section id="porque" class="hero-section">
+      <section id="porque" class="hero-section animate-on-scroll">
         <div class="container">
           <div class="hero-content">
             <div class="hero-text">
@@ -21,7 +21,7 @@
       
       <!-- Full Width Carousel -->
       <div class="hero-carousel">
-        <div class="carousel-track" :style="{ transform: `translateX(calc(-${currentSlide * (280 + 5)}px + 50vw - 140px))` }">
+        <div class="carousel-track" :style="{ transform: `translateX(calc(-${currentSlide * 280}px + 50vw - 140px))` }">
           <div class="carousel-slide" v-for="(image, index) in duplicatedImages" :key="index" :class="{ center: isCenterSlide(index) }">
             <img :src="image.src" :alt="image.alt" />
           </div>
@@ -32,10 +32,10 @@
       </section>
 
     <!-- Products Section -->
-    <section id="produtos" class="products-section">
+    <section id="produtos" class="products-section animate-on-scroll">
       <div class="container">
         <div class="section-header">
-          <h1>Vender deveria ser simples. Receber também.</h1>
+          <h1>Vender deveria ser simples.<br>Receber também.</h1>
           <p class="section-subtitle">Com a Plenna, você vende parcelado, recebe à vista e garante cada pagamento. Um ecossistema completo que elimina as travas, amplia seu público e devolve o controle do seu negócio.</p>
         </div>
 
@@ -81,10 +81,10 @@
     </section>
 
     <!-- Taxas Section -->
-    <section id="taxas" class="taxas-section">
+    <section id="taxas" class="taxas-section animate-on-scroll">
       <div class="container">
         <div class="section-header">
-          <h1>O dinheiro é seu. E agora ele fica com você.</h1>
+          <h1>O dinheiro é seu.<br>E agora ele fica com você.</h1>
         </div>
         
         <div class="pricing-showcase">
@@ -145,10 +145,10 @@
     </section>
 
     <!-- Quem Somos Section -->
-    <section id="quem-somos" class="about-section">
+    <section id="quem-somos" class="about-section animate-on-scroll">
       <div class="container">
         <div class="section-header">
-          <h1>Feita por quem viveu o mercado. Movida por quem quer transformá-lo.</h1>
+          <h1>Feita por quem viveu o mercado.<br>Movida por quem quer transformá-lo.</h1>
         </div>
         
         <div class="about-content">
@@ -190,7 +190,7 @@
     </section>
 
     <!-- FAQ Section -->
-    <section id="faq" class="faq-section">
+    <section id="faq" class="faq-section animate-on-scroll">
       <div class="container">
         <div class="section-header">
           <h1>Perguntas Frequentes</h1>
@@ -228,6 +228,15 @@
             </div>
           </details>
         </div>
+        
+        <div class="faq-help">
+          <a href="https://wa.me/5511999999999" target="_blank" class="btn-help">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.106"/>
+            </svg>
+            Preciso de ajuda
+          </a>
+        </div>
       </div>
     </section>
 
@@ -243,6 +252,14 @@
 
 <script>
 import LandingNavbar from '../components/LandingNavbar.vue'
+import img1 from '@/assets/images/1.png'
+import img2 from '@/assets/images/2.png'
+import img3 from '@/assets/images/3.png'
+import img4 from '@/assets/images/4.png'
+import img5 from '@/assets/images/5.png'
+import img6 from '@/assets/images/6.png'
+import img7 from '@/assets/images/7.png'
+import img8 from '@/assets/images/8.png'
 
 export default {
   name: 'HomeView',
@@ -253,14 +270,14 @@ export default {
     return {
       currentSlide: 0,
       carouselImages: [
-        { src: '/src/assets/images/1.png', alt: 'Dashboard Plenna 1' },
-        { src: '/src/assets/images/2.png', alt: 'Dashboard Plenna 2' },
-        { src: '/src/assets/images/3.png', alt: 'Dashboard Plenna 3' },
-        { src: '/src/assets/images/4.png', alt: 'Dashboard Plenna 4' },
-        { src: '/src/assets/images/5.png', alt: 'Dashboard Plenna 4' },
-        { src: '/src/assets/images/6.png', alt: 'Dashboard Plenna 6' },
-        { src: '/src/assets/images/7.png', alt: 'Dashboard Plenna 7' },
-        { src: '/src/assets/images/8.png', alt: 'Dashboard Plenna 7' },
+        { src: img1, alt: 'Dashboard Plenna 1' },
+        { src: img2, alt: 'Dashboard Plenna 2' },
+        { src: img3, alt: 'Dashboard Plenna 3' },
+        { src: img4, alt: 'Dashboard Plenna 4' },
+        { src: img5, alt: 'Dashboard Plenna 5' },
+        { src: img6, alt: 'Dashboard Plenna 6' },
+        { src: img7, alt: 'Dashboard Plenna 7' },
+        { src: img8, alt: 'Dashboard Plenna 8' },
       ],
       carouselInterval: null
     }
@@ -275,6 +292,7 @@ export default {
   },
   mounted() {
     this.startCarousel()
+    this.initScrollAnimations()
   },
   beforeUnmount() {
     this.stopCarousel()
@@ -284,7 +302,7 @@ export default {
       this.currentSlide = this.carouselImages.length
       this.carouselInterval = setInterval(() => {
         this.nextSlide()
-      }, 3000)
+      }, 1800)
     },
     stopCarousel() {
       if (this.carouselInterval) {
@@ -299,6 +317,19 @@ export default {
     },
     isCenterSlide(index) {
       return index === this.currentSlide
+    },
+    initScrollAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in')
+          }
+        })
+      }, { threshold: 0.1 })
+      
+      document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        observer.observe(el)
+      })
     }
   }
 }
@@ -306,20 +337,20 @@ export default {
 
 <style scoped>
 /* Plenna Home Styles */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --pl-grad-bg: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-  --pl-grad-secondary: linear-gradient(135deg, #00d4aa 0%, #00a693 100%);
-  --pl-grad-accent: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --pl-grad-bg: linear-gradient(90deg, #000000 0%, #605e5e 100%);
+  --pl-grad-secondary: linear-gradient(180deg, #004d48 0%, #3ff3e7 100%);
+  --pl-grad-accent: linear-gradient(135deg, #004d48 0%, #3ff3e7 100%);
   --pl-white: #ffffff;
   --pl-muted: #a1a1aa;
   --pl-black: #000000;
   --pl-surface: rgba(255, 255, 255, 0.05);
   --pl-border: rgba(255, 255, 255, 0.1);
   --shadow-modern: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  --shadow-card: 0 10px 25px -5px rgba(0, 212, 170, 0.1), 0 10px 10px -5px rgba(0, 212, 170, 0.04);
-  --shadow-card-hover: 0 20px 40px -10px rgba(0, 212, 170, 0.2);
+  --shadow-card: 0 10px 25px -5px rgba(63, 243, 231, 0.1), 0 10px 10px -5px rgba(63, 243, 231, 0.04);
+  --shadow-card-hover: 0 20px 40px -10px rgba(63, 243, 231, 0.2);
   --container: 1200px;
   --blur: blur(20px);
   --spacing-xs: 1rem;
@@ -334,12 +365,13 @@ export default {
 }
 
 .home {
-  font-family: 'Inter', 'Montserrat', system-ui, sans-serif;
+  font-family: 'Montserrat', system-ui, sans-serif;
   color: var(--pl-white);
   background: var(--pl-grad-bg);
   overflow-x: hidden;
   position: relative;
   min-height: 100vh;
+  scroll-behavior: smooth;
 }
 
 
@@ -374,14 +406,14 @@ export default {
 
 
 main {
-  padding-top: 100px;
+  padding-top: 60px;
   position: relative;
   z-index: 1;
 }
 
 @media (min-width: 768px) {
   main {
-    padding-top: 140px;
+    padding-top: 80px;
   }
 }
 
@@ -425,6 +457,17 @@ section {
   padding: 3rem 0;
   position: relative;
   z-index: 2;
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.animate-on-scroll.animate-in {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @media (min-width: 480px) {
@@ -475,11 +518,12 @@ section {
 
 .section-header h1 {
   font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: 800;
+  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
   margin-bottom: var(--spacing-md);
   line-height: 1.1;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #ffffff 0%, #00d4aa 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #3ff3e7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -504,8 +548,8 @@ p {
 
 /* Hero Section */
 .hero-section {
-  padding: 4rem 0 3rem 0;
-  min-height: 70vh;
+  padding: 2rem 0 3rem 0;
+  min-height: 60vh;
   display: flex;
   align-items: center;
   position: relative;
@@ -514,15 +558,15 @@ p {
 
 @media (min-width: 768px) {
   .hero-section {
-    padding: 6rem 0 4rem 0;
-    min-height: 80vh;
+    padding: 3rem 0 4rem 0;
+    min-height: 70vh;
   }
 }
 
 @media (min-width: 1024px) {
   .hero-section {
-    padding: 8rem 0 6rem 0;
-    min-height: 85vh;
+    padding: 4rem 0 6rem 0;
+    min-height: 75vh;
   }
 }
 
@@ -552,6 +596,7 @@ p {
 .hero-title {
   font-size: clamp(2.25rem, 5vw, 3.75rem);
   font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
   line-height: 1.15;
   letter-spacing: -0.025em;
   color: #ffffff;
@@ -561,6 +606,7 @@ p {
 .hero-subtitle {
   font-size: clamp(1rem, 2.5vw, 1.25rem);
   font-weight: 400;
+  font-family: 'Montserrat', sans-serif;
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.6;
   letter-spacing: 0.005em;
@@ -617,35 +663,35 @@ p {
 /* Full Width Hero Carousel */
 .hero-carousel {
   width: 100vw;
-  height: 400px;
+  height: 320px;
   position: relative;
   left: 50%;
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(0, 212, 170, 0.1) 0%, rgba(102, 126, 234, 0.1) 100%);
-  border-top: 1px solid rgba(0, 212, 170, 0.2);
-  border-bottom: 1px solid rgba(0, 212, 170, 0.2);
+  background: linear-gradient(135deg, rgba(63, 243, 231, 0.1) 0%, rgba(0, 77, 72, 0.1) 100%);
+  border-top: 1px solid rgba(63, 243, 231, 0.2);
+  border-bottom: 1px solid rgba(63, 243, 231, 0.2);
   display: flex;
   align-items: center;
 }
 
 @media (min-width: 480px) {
   .hero-carousel {
-    height: 500px;
+    height: 380px;
   }
 }
 
 @media (min-width: 768px) {
   .hero-carousel {
-    height: 600px;
+    height: 440px;
   }
 }
 
 @media (min-width: 1024px) {
   .hero-carousel {
-    height: 700px;
+    height: 500px;
   }
 }
 
@@ -655,12 +701,11 @@ p {
 
 .carousel-track {
   display: flex;
-  width: calc((280px * 18) + (5px * 17));
+  width: calc(280px * 18);
   height: 100%;
   transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   transform-origin: center;
   padding: 20px 0;
-  gap: 5px;
 }
 
 .carousel-slide {
@@ -675,12 +720,6 @@ p {
   justify-content: center;
 }
 
-.carousel-slide.center {
-  transform: scale(0.9);
-  opacity: 1;
-  z-index: 2;
-}
-
 .carousel-slide img {
   width: 300px;
   height: 300px;
@@ -691,8 +730,14 @@ p {
   box-shadow: 
     0 8px 25px rgba(0, 0, 0, 0.3),
     0 2px 8px rgba(0, 0, 0, 0.15);
-  transform: perspective(800px) rotateX(15deg) rotateY(-5deg);
-  transform-origin: bottom center;
+  transform: perspective(1200px) rotateX(12deg);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.carousel-slide img:hover {
+  transform: perspective(1200px) rotateX(8deg) scale(1.1);
+  filter: blur(0px) brightness(1.1) contrast(1.05) saturate(1.05);
 }
 
 @media (min-width: 480px) {
@@ -700,7 +745,12 @@ p {
     width: 350px;
     height: 350px;
     border-radius: 18px;
-    transform: perspective(900px) rotateX(15deg) rotateY(-5deg);
+    transform: perspective(1300px) rotateX(12deg);
+  }
+  
+  .carousel-slide img:hover {
+    transform: perspective(1300px) rotateX(8deg) scale(1.1);
+    filter: blur(0px) brightness(1.1) contrast(1.05) saturate(1.05);
   }
 }
 
@@ -709,7 +759,12 @@ p {
     width: 400px;
     height: 400px;
     border-radius: 20px;
-    transform: perspective(1000px) rotateX(15deg) rotateY(-5deg);
+    transform: perspective(1400px) rotateX(12deg);
+  }
+  
+  .carousel-slide img:hover {
+    transform: perspective(1400px) rotateX(8deg) scale(1.1);
+    filter: blur(0px) brightness(1.1) contrast(1.05) saturate(1.05);
   }
 }
 
@@ -718,18 +773,16 @@ p {
     width: 450px;
     height: 450px;
     border-radius: 24px;
-    transform: perspective(1100px) rotateX(15deg) rotateY(-5deg);
+    transform: perspective(1500px) rotateX(12deg);
+  }
+  
+  .carousel-slide img:hover {
+    transform: perspective(1500px) rotateX(8deg) scale(1.1);
+    filter: blur(0px) brightness(1.1) contrast(1.05) saturate(1.05);
   }
 }
 
-.carousel-slide.center img {
-  filter: blur(0px) brightness(1.05) contrast(1.05) saturate(1.05);
-  box-shadow: 
-    0 25px 50px rgba(0, 212, 170, 0.4), 
-    0 0 0 2px rgba(0, 212, 170, 0.3),
-    0 5px 15px rgba(0, 0, 0, 0.2);
-  transform: perspective(1200px) rotateX(12deg) rotateY(-3deg);
-}
+
 
 
 
@@ -764,12 +817,13 @@ p {
 
 .btn-primary {
   color: var(--pl-white);
-  font-weight: 500;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
   text-decoration: none;
   padding: 0.875rem 1.5rem;
   border-radius: 50px;
-  background: linear-gradient(135deg, #00d4aa 0%, #667eea 100%);
-  box-shadow: 0 4px 20px rgba(0, 212, 170, 0.2);
+  background: var(--pl-grad-secondary);
+  box-shadow: 0 4px 20px rgba(63, 243, 231, 0.2);
   transition: all 0.3s ease;
   font-size: 0.9rem;
   display: inline-flex;
@@ -795,7 +849,7 @@ p {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 212, 170, 0.3);
+  box-shadow: 0 8px 30px rgba(63, 243, 231, 0.3);
 }
 
 @media (max-width: 640px) {
@@ -848,9 +902,9 @@ p {
 
 .btn-outline:hover {
   transform: translateY(-2px);
-  border-color: rgba(0, 212, 170, 0.4);
-  background: rgba(0, 212, 170, 0.1);
-  box-shadow: 0 8px 30px rgba(0, 212, 170, 0.15);
+  border-color: rgba(63, 243, 231, 0.4);
+  background: rgba(63, 243, 231, 0.1);
+  box-shadow: 0 8px 30px rgba(63, 243, 231, 0.15);
 }
 
 @media (max-width: 640px) {
@@ -873,6 +927,10 @@ p {
 
 
 /* Products Section */
+.products-section {
+  background: linear-gradient(135deg, rgba(63, 243, 231, 0.02) 0%, rgba(0, 77, 72, 0.02) 100%);
+}
+
 .products-grid {
   display: grid;
   gap: 1.5rem;
@@ -975,6 +1033,10 @@ p {
 }
 
 /* Pricing Section */
+.taxas-section {
+  background: linear-gradient(135deg, rgba(0, 77, 72, 0.03) 0%, rgba(63, 243, 231, 0.03) 100%);
+}
+
 .pricing-showcase {
   margin-bottom: 4rem;
   padding: 0 1rem;
@@ -1261,6 +1323,10 @@ p {
 }
 
 /* About Section */
+.about-section {
+  background: linear-gradient(135deg, rgba(63, 243, 231, 0.015) 0%, rgba(0, 77, 72, 0.015) 100%);
+}
+
 .about-content {
   display: grid;
   gap: 2rem;
@@ -1410,6 +1476,10 @@ p {
 }
 
 /* FAQ Section */
+.faq-section {
+  background: linear-gradient(135deg, rgba(0, 77, 72, 0.025) 0%, rgba(63, 243, 231, 0.025) 100%);
+}
+
 .faq-container {
   max-width: 800px;
   margin: 0 auto;
@@ -1436,23 +1506,17 @@ p {
   cursor: pointer;
   outline: none;
   color: var(--pl-white);
-  font-weight: 700;
-  font-size: 1rem;
-  padding: 1.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 1rem 1.5rem;
   position: relative;
   transition: all 0.3s ease;
 }
 
 @media (min-width: 768px) {
   .faq-item summary {
-    font-size: 1.125rem;
-    padding: 2rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .faq-item summary {
-    padding: 1.5rem;
+    font-size: 1rem;
+    padding: 1.25rem 1.5rem;
   }
 }
 
@@ -1498,18 +1562,12 @@ p {
 }
 
 .faq-content {
-  padding: 0 1.5rem 1.5rem 1.5rem;
+  padding: 0 1.5rem 1rem 1.5rem;
 }
 
 @media (min-width: 768px) {
   .faq-content {
-    padding: 0 2rem 2rem 2rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .faq-content {
-    padding: 0 1.5rem 1.5rem 1.5rem;
+    padding: 0 1.5rem 1.25rem 1.5rem;
   }
 }
 
@@ -1521,9 +1579,40 @@ p {
 
 .faq-content p {
   color: var(--pl-white);
-  line-height: 1.6;
-  opacity: 0.9;
+  line-height: 1.5;
+  opacity: 0.85;
   margin: 0;
+  font-size: 0.9rem;
+}
+
+.faq-help {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.btn-help {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--pl-grad-secondary);
+  color: var(--pl-white);
+  text-decoration: none;
+  padding: 0.875rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 20px rgba(63, 243, 231, 0.2);
+  transition: all 0.3s ease;
+}
+
+.btn-help:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(63, 243, 231, 0.3);
+}
+
+.btn-help svg {
+  flex-shrink: 0;
 }
 
 /* Footer */

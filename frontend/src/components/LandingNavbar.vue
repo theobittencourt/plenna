@@ -115,7 +115,7 @@ export default {
   gap: 0px;
   padding: 4px;
   max-height: 65px;
-  border-radius: 8px;
+  border-radius: 40px;
   /* background: linear-gradient(135deg, rgba(0, 212, 170, 0.06) 0%, rgba(102, 126, 234, 0.06) 100%); */
   backdrop-filter: blur(20px);
   border: 1px solid rgba(0, 212, 170, 0.12);
@@ -204,23 +204,23 @@ export default {
 @media (min-width: 768px) {
   .nav a {
     font-size: 13px;
-    padding: 4px 8px;
-    border-radius: 6px;
+    /* padding: 4px 8px; */
+    /* border-radius: 6px; */
   }
 }
 
 .nav a::before {
-  content: '';
+  /* content: ''; */
   position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(0, 212, 170, 0.3) 0%, rgba(102, 126, 234, 0.3) 100%);
-  border-radius: 12px;
+  /* inset: 0; */
+  /* background: linear-gradient(135deg, rgba(0, 212, 170, 0.3) 0%, rgba(102, 126, 234, 0.3) 100%); */
+  /* border-radius: 12px; */
   opacity: 0;
-  transition: opacity 0.3s ease;
+  /* transition: opacity 0.3s ease; */
 }
 
 .nav a::after {
-  content: "";
+  /* content: ""; */
   position: absolute;
   left: 50%;
   bottom: -2px;
@@ -230,10 +230,11 @@ export default {
   border-radius: 2px;
   background: linear-gradient(90deg, #00d4aa, #667eea);
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-shadow: 0 0 20px rgba(0, 212, 170, 0.5);
 }
 
 .nav a:hover {
-  transform: translateY(-2px);
+  /* transform: translateY(-2px); */
   text-shadow: 0 0 20px rgba(0, 212, 170, 0.5);
 }
 
@@ -246,8 +247,9 @@ export default {
 }
 
 .nav a.is-active {
-  background: linear-gradient(135deg, rgba(0, 212, 170, 0.4) 0%, rgba(102, 126, 234, 0.4) 100%);
-  text-shadow: 0 0 15px rgba(0, 212, 170, 0.6);
+  color: #00d4aa;
+  /* background: linear-gradient(135deg, rgba(0, 212, 170, 0.4) 0%, rgba(102, 126, 234, 0.4) 100%); */
+  /* text-shadow: 0 0 15px rgba(0, 212, 170, 0.6); */
 }
 
 .nav a.is-active::after {
