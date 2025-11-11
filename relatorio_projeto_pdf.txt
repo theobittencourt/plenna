@@ -1,0 +1,844 @@
+- Acesso e estrutura geral de navegação
+- Painel de Início
+- Painel de Vendas
+  - Vendas gerais
+  - Assinaturas
+  - Contratos de recorrência (Central, Parcelas, Contratos)
+  - Devolutivas (reembolsos, chargebacks, cancelamentos, contestações)
+- Módulo de Produtos
+  - Meus Produtos
+  - Minhas Coproduções
+  - Minhas Afiliações
+  - Dentro do produto: Ofertas, Turmas, Membros, Área de Membros, Links, Pixel de Rastreamento, Configurações
+- Mercado de Afiliação (Marketplace de produtos para afiliados)
+- Quem Indica (indicações de novos produtores)
+- Integrações (por produto e painel geral)
+- Relatórios (dashboards analíticos)
+- Dentro de cada módulo, tratar os tópicos numerados como requisitos funcionais (campos, filtros, estados, ações, comportamentos).
+- Sempre manter a coerência de nomes globais:
+  - Modelo = BR / Global
+  - Método de venda = Pagamento único BR, Pagamento único Global, Mensal BR, Mensal Global, Recorrente
+  - Método de pagamento = Pix, Boleto, Cartão, Cartão Internacional
+- Onde houver “Central” e “Detalhe”, são telas distintas, não variação visual na mesma tela.
+
+3 - Alternativas consideradas
+- Alguns gráficos de relatórios ainda podem mudar de layout (tipo de gráfico, quantidade de séries), mas os conceitos principais (o que é medido) já estão fechados.
+- Em Vendas/Relatórios, algumas quebras podem virar dashboards separados no futuro, mas o documento assume tudo dentro do módulo “Relatórios” com filtros e drill-down.
+
+4 - Riscos / dependências
+- Risco de inconsistência se algum painel usar termos diferentes dos padronizados (modelo, método de venda, método de pagamento, país, moeda).
+- Risco de duplicar lógica entre Vendas x Relatórios se o backend não centralizar as agregações.
+- Dependência forte da modelagem de dados de vendas, assinaturas, contratos, pixels, links e afiliações para os painéis funcionarem como descrito.
+
+5 - Métricas de sucesso
+- Todos os painéis descritos existem e funcionam com filtros coerentes entre si.
+- Mesmas vendas/contratos exibem números iguais em Vendas, Produtos (quando cabível) e Relatórios.
+- Produtor consegue entender sua operação apenas navegando entre Início, Vendas, Produtos, Afiliação e Relatórios, sem precisar do Financeiro para interpretação de desempenho.
+
+DOCUMENTO DE REQUISITOS - SISTEMA PLENNA
+
+1. Estrutura geral e navegação
+1.1 - Árvore principal de navegação (menu lateral)
+- Início
+- Vendas
+  - Vendas
+  - Assinaturas
+  - Contratos de recorrência
+  - Devolutivas
+- Produtos
+  - Meus Produtos
+  - Minhas Coproduções
+  - Minhas Afiliações
+- Afiliação
+- Quem Indica
+- Financeiro (específico em outro doc, mas presente no menu)
+- Relatórios
+- Integrações
+- Configurações (nível de conta, fora do escopo detalhado aqui)
+
+1.2 - Regras gerais
+- Logo Plenna no topo esquerdo sempre leva para “Início”.
+- Abas ativas ficam destacadas no menu lateral.
+- Filtros nas páginas são reativos - qualquer alteração recarrega o conteúdo imediatamente.
+- Todas as telas respeitam os mesmos filtros globais aplicáveis:
+  - Produto (quando fizer sentido)
+  - Modelo (BR, Global, Geral)
+  - Método de venda
+  - Método de pagamento
+  - Período (hoje, 7, 30, 90, 180 dias, personalizado)
+
+2. Painel de Início (resumo operacional do produtor)
+Este painel já está detalhado no PDF “Paineis Sistema Plenna – Painel de Início”, mas precisa estar alinhado com o resto.
+2.1 - Objetivo
+- Mostrar a “fotografia operacional” das vendas do produtor, sem misturar saldos e extratos financeiros.
+- Métricas de desempenho + status das vendas (ativas, baixadas, pendentes, abandonos etc.).
+
+2.2 - Filtros principais
+- Produto
+- Modalidade (Modelo: BR, Global, Geral)
+- Moeda (moeda da venda, conversão sempre exibida em R$)
+- Período
+
+2.3 - Blocos principais
+- Receita Total (R$) - vendas confirmadas (pagas + a receber), exclui pendentes, canceladas e reembolsadas.
+- Ticket Médio (R$) - média por venda no período.
+- Número Total de Vendas - vendas confirmadas e ativas.
+
+2.4 - Gráficos
+- Gráfico de linha de desempenho ao longo do tempo (X = tempo, Y = receita em R$).
+- Gráficos de pizza:
+  - Modelo de recebimento (cartão, pix, boleto, cartão internacional).
+  - Status de pagamento (Recebido x A receber).
+  - Produtos (participação na receita).
+  - Método de venda (único BR, único Global, Mensal BR, Mensal Global, Recorrente).
+
+2.5 - Métricas detalhadas (parte inferior)
+- Vendas Ativas
+- Vendas Baixadas (tudo que saiu do ciclo ativo, em qualquer modalidade)
+- Contratos Baixados (subconjunto das vendas baixadas)
+- Checkout Abandonado
+- Pendentes de Pagamento
+- Vendas com Atraso
+- Ticket Médio
+
+2.6 - Diferença Início x Financeiro
+- Início: só desempenho e status - sem saldos, taxas, extrato.
+- Financeiro: foca em saldo, repasse, taxas e extratos.
+
+3. Painel de Vendas (módulo Vendas - aba “Vendas”)
+3.1 - Objetivo
+- Ser a visão central de todas as vendas (independente de serem únicas, mensais ou recorrentes).
+- Oferecer filtros poderosos de status, método de venda e pagamento.
+
+3.2 - Métricas de topo
+- Valor total de Vendas Líquidas (R$) no período filtrado.
+- Ticket Médio Líquido (R$) das vendas.
+- Quantidade de Vendas - acompanha exatamente a base da receita líquida mostrada.
+- Quantidade de Faturas Geradas (todas as faturas, pagas ou não).
+
+3.3 - Filtros
+- Produto
+- Modelo (BR, Global, Geral)
+- Método de venda
+- Método de pagamento
+- Status (múltipla seleção):
+  - Pago
+  - Pendente de pagamento
+  - Reembolsado
+  - Chargeback
+  - Contestado
+  - Cancelado
+  - Combinações (Pago/Reembolsado, Pago/Chargeback, Pago/Cancelado, Pago/Contestado) para refletir vendas parcialmente afetadas.
+- Data (período)
+- Campo de busca (ID da venda, nome do comprador, e-mail etc.).
+
+Regras importantes de impacto nos cards:
+- As métricas de valor líquido e quantidade de vendas sempre refletem o conjunto de vendas efetivamente considerado para “Pago” e suas combinações (ex.: Pago/Chargeback considera apenas a parte paga que ainda vale).
+- Filtros de status como “Reembolsado”, “Chargeback”, “Cancelado” isolados afetam faturas e extrato mas não somam na receita líquida.
+
+3.4 - Extrato de Vendas (tabela)
+Colunas:
+- Status
+- Data
+- ID (da venda)
+- Produto
+- Comprador (nome)
+- Método de pagamento
+- Método de venda
+- Origem (país / moeda da venda - ex.: US / USD)
+- Valor pago na moeda de origem (convertido visualmente para R$ quando aplicável)
+- Valor líquido (em R$)
+- Ações (3 pontinhos)
+
+Ações nos 3 pontinhos:
+- Ver detalhes da venda (tela dedicada com: histórico de faturas, status detalhado, origem, taxas, devolutivas, etc.).
+
+4. Painel de Assinaturas (dentro de Vendas)
+Quando o usuário clica em “Assinaturas” dentro de Vendas, vai para o módulo específico de vendas mensais (não contratos).
+4.1 - Estrutura de abas internas
+- Ao clicar em “Assinaturas”, abre primeiro a aba “Central”.
+- Na parte superior, dois botões (estilo abas secundárias):
+  - Central
+  - Assinaturas
+
+Cada uma é uma “face” diferente - telas separadas.
+
+4.2 - Aba “Central” de Assinaturas
+Objetivo: visão gerencial de assinaturas por período.
+Filtros:
+- Data
+- Método de pagamento
+
+Cards superiores:
+- Recebimentos do período
+  - Valor total recebido em assinaturas no período
+  - Quantidade de mensalidades pagas
+- Recuperação do período
+  - Valor recuperado de assinaturas que estavam vencidas e foram pagas
+  - Quantidade de mensalidades recuperadas
+- Eventos de cobrança
+  - Quantidade de disparos de cobrança (WhatsApp, ligação, e-mail, SMS) relacionados a assinaturas
+
+Blocos abaixo:
+- Em aberto - quantidade de mensalidades futuras já geradas e ainda não pagas
+- Vencidas - quantidade de mensalidades que ultrapassaram a data de vencimento
+- Devendo - mensalidades vencidas há mais de 30 dias (ou outra regra definida no core)
+
+4.3 - Aba “Assinaturas” (detalhe linha a linha)
+Cards superiores:
+- Receita Bruta de Assinaturas
+- Receita Líquida de Assinaturas
+- Quantidade de Assinaturas
+
+Filtros:
+- Modalidade (Modelo: BR, Global, Geral)
+- Status:
+  - Paga
+  - Em aberto
+  - Vencida
+  - Reembolsada
+  - Chargeback
+  - Contestado
+  - Cancelada
+- Método de pagamento
+- Origem (país / moeda)
+- Data
+- Busca
+
+Regras importantes:
+- Os cards de valor e quantidade são moldados pelos filtros de status Paga, Em aberto, Vencida.
+- Status de devolutivas (Reembolsada, Chargeback, Contestado, Cancelada) afetam o extrato e faturas, mas não somam receita líquida.
+
+4.4 - Extrato de Assinaturas
+Colunas:
+- Status
+- Data
+- ID (referente à assinatura/renovação)
+- Produto
+- Comprador
+- Método de pagamento
+- Estágio (1º mês, 2º mês, 3º mês...)
+- Origem (país / moeda)
+- Valor da parcela (na moeda original, convertido visualmente para R$)
+- Valor total acumulado daquela assinatura até aquele pagamento (em R$)
+- Ações (3 pontinhos)
+
+Comportamentos importantes:
+- A cada novo pagamento, uma nova linha é criada com o valor da parcela e o acumulado anterior (ex.: parcela 4 de 10, valor 300, acumulado passa de 900 para 1200, mas o “acumulado 1200” só aparece após confirmação do pagamento).
+- Ao clicar em “Ver detalhes” (3 pontinhos), abre uma tela mostrando todo o histórico daquela assinatura (pagos, em aberto, vencidos, devolutivas).
+
+5. Painel de Contratos de Recorrência (dentro de Vendas)
+Ao clicar em “Contratos de Recorrência” dentro de Vendas, abre um painel com três abas internas:
+- Central
+- Parcelas
+- Contratos
+
+5.1 - Aba “Central” (Contratos)
+Filtros:
+- Data
+- Método de pagamento
+
+Cards superiores:
+- Recebimentos do período
+  - Valor total recebido em contratos recorrentes
+  - Quantidade de contratos com pagamento no período
+- Recuperação do período
+  - Valor recuperado de parcelas que estavam inadimplentes e foram pagas
+  - Quantidade de parcelas recuperadas
+- Eventos de cobrança
+  - Contagem de ações de cobrança (WhatsApp, ligação, e-mail, SMS) relacionadas a contratos
+
+Blocos abaixo:
+- Vencidos / Inadimplentes - quantidade de parcelas dos contratos em atraso (podemos usar “Inadimplentes” como status consolidado)
+- Em aberto - quantidade de parcelas futuras geradas e não vencidas
+
+5.2 - Aba “Parcelas”
+Objetivo: visão linha a linha de cada parcela de contrato.
+Cards superiores:
+- Valor total líquido das parcelas no período
+- Quantidade de parcelas
+
+Filtros:
+- Status:
+  - Paga
+  - Em aberto
+  - Inadimplente (vencida)
+  - Reembolsada
+  - Chargeback
+  - Contestado
+  - Cancelada
+- Método de pagamento
+- Número da parcela (filtrar por “1/12”, “5/10” etc. se desejado)
+- Data
+- Busca
+
+Extrato (colunas):
+- Status
+- Data
+- ID (da parcela ou fatura)
+- Produto
+- Comprador
+- Método de pagamento
+- Número da parcela (ex.: 3/12, 5/8, etc.)
+- Valor líquido (R$)
+- Ações (3 pontinhos)
+
+5.3 - Aba “Contratos”
+Objetivo: visão agrupada por contrato.
+Cards superiores:
+- Valor total líquido dos contratos (somatório do previsto/efetivado)
+- Quantidade de contratos
+
+Filtros:
+- Status do contrato:
+  - Ativo
+  - Em aberto
+  - Inadimplente
+  - Cancelado
+  - Baixado (encerrado por conclusão ou quitação)
+  - Com devolutiva (reembolsado/chargeback etc.)
+- Método de pagamento
+- Número de parcelas (ex.: contratos 12x, 24x)
+- Data
+- Busca
+
+Extrato (colunas):
+- Status do contrato
+- Data de início
+- ID do contrato
+- Produto
+- Comprador
+- Método de pagamento
+- Número de parcelas (total - ex.: 12x, 24x)
+- Valor total líquido previsto
+- Valor líquido já recebido
+- Ações (3 pontinhos → ver detalhes do contrato, listar parcelas, devolutivas, histórico).
+
+6. Painel de Devolutivas (Reembolsos / Chargebacks / Cancelamentos / Contestações)
+Aqui entra o que antes foi chamado de “Reembolsos/Chargebacks”, renomeado para “Devolutivas”.
+6.1 - Objetivo
+- Centralizar todas as devolutivas de venda em um único painel: reembolso, chargeback, cancelamento e contestação.
+
+6.2 - Cards principais
+- Quantidade de devolutivas no período
+- Valor líquido impactado por devolutivas (não soma receita, é métrica de perda)
+- Faturas geradas relacionadas às devolutivas
+
+6.3 - Filtros
+- Produto
+- Tipo de devolutiva: Reembolso, Chargeback, Cancelamento, Contestação
+- Modelo (BR, Global, Geral)
+- Método de venda
+- Método de pagamento
+- Data
+- Busca
+
+6.4 - Extrato de Devolutivas
+Colunas:
+- Status (Reembolsado, Chargeback, Cancelado, Contestado, Pago/Chargeback, Pago/Reembolsado, Pago/Cancelado, Pago/Contestado etc.)
+- Data
+- ID da venda
+- Produto
+- Cliente
+- Método de venda
+- Método de pagamento
+- Origem (país/moeda)
+- Valor (sempre líquido)
+- Ações (3 pontinhos → “Ver detalhes da venda”).
+
+7. Módulo de Produtos (Meus Produtos / Coproduções / Afiliações)
+7.1 - Aba “Meus Produtos”
+7.1.1 - Objetivo
+- Gerenciar os produtos que o produtor é dono.
+
+7.1.2 - Layout
+- Botões no topo:
+  - Meus Produtos (ativo por padrão)
+  - Minhas Coproduções
+  - Minhas Afiliações
+- Dentro de “Meus Produtos”:
+  - Botão “Novo Produto” (apenas aqui).
+  - Cards/listagem de produtos com:
+    - Imagem / nome do produto
+    - Status:
+      - Vendendo
+      - Rascunho (criado mas não liberado)
+      - Pendente (aguardando alguma aprovação ou configuração mínima)
+      - Desativado (já foi ativo, hoje não está vendendo)
+    - Ao clicar no card, abre o painel interno do produto.
+
+7.2 - Aba “Minhas Coproduções”
+- Lista de produtos em que o usuário é coprodutor.
+- Colunas:
+  - Produto
+  - Data de início da coprodução
+  - Data de encerramento (∞ quando indeterminado)
+  - Comissão (%) do coprodutor
+- Acesso:
+  - Se tiver permissão de admin, abre o painel do produto com edição liberada (menos remover o criador).
+  - Se não tiver permissão, vê apenas visão de ganhos/relatórios, sem edição.
+
+7.3 - Aba “Minhas Afiliações”
+- Lista de produtos em que o usuário é afiliado.
+- Colunas:
+  - Produto
+  - Data de início
+  - Comissão (%)
+  - Status da afiliação:
+    - Vendendo
+    - Desativado
+    - Pendente (aguardando aprovação)
+- Ao clicar no produto:
+Sub-abas internas:
+- Geral
+  - Resumo do produto (nome, descrição, categoria, comissões, tipo de atribuição).
+- Links de ofertas
+  - Lista de todas as ofertas liberadas para aquele afiliado.
+  - Colunas:
+    - Nome da oferta
+    - Preço
+    - Link da oferta
+    - Modelo (BR / Global)
+    - Método de venda
+    - Pagamentos habilitados (Pix, Cartão, Boleto etc.)
+  - Ações: copiar link, visualizar detalhes básicos da oferta.
+
+8. Painel interno do Produto
+Ao clicar em um produto (Meus Produtos ou Coproduções com permissão), abre o painel completo desse produto.
+8.1 - Cabeçalho
+- Logo do produto + nome no canto superior esquerdo.
+- No canto superior direito:
+  - Badge de status (Vendendo, Rascunho, Pendente, Desativado) - funciona como botão com dropdown.
+  - Botão “Área de Membros” (abre área de membros ou builder).
+  - Ícone de lixeira (excluir produto) com modal de confirmação irreversível.
+
+8.2 - Abas internas
+- Ofertas
+- Turmas
+- Membros
+- Área de Membros
+- Links
+- Pixel de Rastreamento
+- Configurações
+
+8.3 - Aba “Ofertas”
+Lista de ofertas do produto.
+- Botões superiores:
+  - “Criar Oferta”
+  - Filtro: Ativas / Arquivadas
+- Colunas (Ofertas Ativas):
+  - Data de criação
+  - Botão on/off de ativação (quando o produtor tem permissão)
+  - Nome da oferta
+  - Preço
+  - Modelo (BR / Global)
+  - Método de venda
+  - Link do checkout (para copiar)
+  - Ações (3 pontinhos):
+    - Editar
+    - Arquivar
+    - Excluir
+    - Duplicar
+- “Arquivadas”:
+  - Mesma listagem, com opção para desarquivar (via checkbox e botão ou ação nos 3 pontinhos).
+- Ao clicar em “Criar Oferta” ou “Editar”:
+  - Abre tela de edição da oferta com:
+    - Nome da oferta
+    - Turma associada
+    - Preço
+    - Modelo (BR/Global)
+    - Método de venda (único BR, único Global, Mensal BR, Mensal Global, Recorrente)
+    - Métodos de pagamento habilitados para essa oferta
+    - Configurações de checkout (layout, campos extras, etc.)
+    - Definição de tempo de acesso (indeterminado, 1m, 3m, 6m, 9m, 1–10 anos)
+    - Config da página de pós-compra.
+
+8.4 - Aba “Turmas”
+- Botão “Criar turma”.
+- Tabela de turmas:
+  - Criação (data)
+  - Turma (nome)
+  - Acesso (estilo de acesso - ênfase na turma padrão)
+  - Ações (3 pontinhos):
+    - Editar
+    - Duplicar
+    - Excluir (somente se não houver vendas vinculadas)
+- Tela de “Criar/Editar turma”:
+  - Nome da turma
+  - Seleção de módulos/conteúdos que a turma terá acesso (todos marcados por padrão)
+  - Campo “Produto com link externo” se o produto não usar área de membros interna (link para plataforma externa, PDF, etc.).
+  - Botão para salvar.
+
+8.5 - Aba “Membros”
+Sub-aba interna com três estados:
+- Membros Ativos (padrão)
+- Convites Pendentes
+- Membros Anteriores
+
+Membros Ativos
+- Botões:
+  - “Adicionar membro”
+  - “Exportar” (gera planilha com nome, e-mail, telefone, turma)
+- Tabela:
+  - Nome
+  - E-mail
+  - Telefone
+  - Turma
+  - Data (prazo de acesso)
+  - Tipo (Gratuito / Pago)
+  - Checkbox por linha
+  - Ações (3 pontinhos):
+    - Remover membro (apenas se o acesso for gratuito - quem pagou é removido automaticamente quando terminar o prazo)
+    - Alterar turma do membro
+    - Enviar e-mail de redefinição de senha
+    - Reenviar e-mail de acesso
+    - Iniciar conversa pelo WhatsApp (abre conversa direta, sem envolver Plenna)
+- Ação em massa:
+  - Selecionando múltiplos membros, aparecem botões “Alterar turma” e “Enviar e-mail” para ações em lote.
+
+Convites Pendentes
+- Barra de busca
+- Tabela:
+  - Nome (se houver)
+  - E-mail
+  - Data de envio do convite
+  - Ícone de lixeira → abre modal para excluir convite.
+
+Membros Anteriores
+- Barra de busca
+- Botão “Exportar”
+- Tabela:
+  - Nome
+  - E-mail
+  - Telefone
+  - Data de remoção/expiração
+
+Adicionar membro (modal):
+- Turma (select - lista de turmas)
+- E-mail
+- Dias de acesso (campo numérico)
+- Checkbox “Acesso vitalício gratuito”
+- Botões “Cancelar” e “Confirmar”
+
+8.6 - Aba “Área de Membros”
+- Card com preview da área de membros atual e botão “Editar”.
+- Acima do card, um toggle/frase: “Deseja usar área de membros própria?”
+  - Se SIM:
+    - Some o preview/builder interno
+    - Aparecem campos para link da área de membros externa ou upload de arquivo (PDF, ebook, etc.).
+  - Todas as informações de acesso são usadas para e-mails transacionais e para o painel do aluno.
+
+8.7 - Aba “Links”
+- Botão “Novo link”
+- Tabela:
+  - Nome
+  - URL encurtada
+  - UTMs configuradas (sim/não ou listagem reduzida)
+  - Cliques
+  - Ações:
+    - Editar
+    - Excluir
+- Tela lateral “Novo link / Editar link”:
+  - Nome
+  - Oferta (select)
+  - Tipo (select baseado em opções pré-definidas - ex.: Tráfego pago, Orgânico, Influencer, etc.)
+  - URL encurtada
+  - Checkbox “Ativar parâmetros de campanha UTM” → abre campos de UTM (source, medium, campaign etc.)
+  - Botões “Cancelar” e “Criar link” / “Salvar”.
+
+8.8 - Aba “Pixel de Rastreamento”
+- Filtro “Plataforma” (Facebook Ads, Google Ads, TikTok, etc.).
+- Botão “Adicionar pixel”.
+- Tabela:
+  - Pixel de rastreamento (nome)
+  - Plataforma
+  - ID do Pixel
+  - Data de criação
+  - Ações:
+    - Editar pixel
+    - Excluir pixel (com modal de confirmação)
+- Fluxo “Adicionar/Editar pixel”:
+Passo 1: selecionar plataforma (lista com radio/checkbox único).
+Passo 2: campos “Nome do pixel” e “ID do pixel”; botões “Voltar” e “Concluir”.
+
+8.9 - Aba “Configurações”
+Sub-abas:
+- Informações básicas
+- Co-produção
+- Afiliados
+- Mensagem de boas-vindas
+
+Informações básicas
+- Campos conforme tela:
+  - Nome do produto
+  - Descrição
+  - Categoria (select)
+  - Imagem (upload)
+  - URL da página de vendas
+  - Outras opções básicas que já estão desenhadas no protótipo.
+
+Co-produção
+- Botão “Convidar parceiro”.
+- Tabela:
+  - Parceiro
+  - Status
+  - Comissão (%)
+  - Data de encerramento
+  - Ações (3 pontinhos):
+    - Editar
+    - Excluir
+
+Regras:
+- Ao editar/excluir coprodutor, abre fluxo de autorização:
+  - Envia e-mail ao parceiro com link.
+  - Parceiro precisa logar na Plenna e aceitar a alteração (botão “Autorizar” ou “Não autorizar”).
+- Comissão total máxima: 100% do produto.
+- Dono precisa ficar com pelo menos 1%.
+- Ao inserir novo parceiro com % que excede o total, o sistema sugere rebalancear automaticamente a parte dos outros parceiros (sem reduzir a parte do dono sem consentimento explícito).
+
+Convidar parceiro
+- Campos:
+  - E-mail do parceiro
+  - Porcentagem de comissão
+  - Confirmação da porcentagem
+  - Checkbox de aceite de termos
+- Ao salvar, parceiro é adicionado como pendente até aceitar o convite via e-mail/plataforma.
+
+Afiliados
+- Toggle “Ativar afiliação para este produto”.
+- Campo “Quem pode se afiliar?”:
+  - Qualquer um pode ser afiliado
+  - Somente afiliados com autorização
+- Tipo da comissão:
+  - Venda única (primeira venda / primeira parcela)
+  - Recorrência (renovações)
+  - Ambos
+- Campo “Comissionar upsell?”:
+  - Comissionar upsell
+  - Não comissionar upsell
+  - (Order bumps são comissionados automaticamente como parte da venda principal).
+- Permissões:
+  - Permitir apenas afiliação (usar links existentes)
+  - Permitir acesso e criação de ofertas próprias
+    - Se marcado, definir faixa de preço mínima e máxima que o afiliado pode usar nas ofertas que criar.
+- Campos de porcentagem:
+  - Comissão em venda única
+  - Comissão em recorrência (se aplicável)
+
+Mensagem de boas-vindas
+- Campo de texto rico para mensagem exibida ao aluno após compra e/ou enviada por e-mail.
+- Campo “Adicionar arquivo” (link ou anexo).
+
+9. Mercado de Afiliação (Aba “Afiliação”)
+9.1 - Objetivo
+- Marketplace de produtos disponíveis para afiliação.
+
+9.2 - Layout principal
+- Título “Mercado de Afiliação” + subtítulo (explicando que é o lugar para encontrar produtos e se afiliar).
+- Controles de ordenação (“Ordem de visualização”):
+  - Mais vendidos
+  - Menor valor
+  - Maior valor
+  - Maior comissão
+- Filtros:
+  - Tipo:
+    - Liberado para afiliação
+    - Somente com autorização
+  - Modelo:
+    - BR
+    - Global
+    - Mensal BR + Mensal Global (juntos, se necessário)
+    - Geral (todos)
+  - Faixa de preço (mínimo/máximo)
+  - Faixa de comissão (mínimo/máximo)
+- Cards de produto:
+  - Nome
+  - Imagem
+  - Categoria
+  - Comissão máxima “até X% / R$ Y por venda”
+  - Preço base (oferta principal)
+
+9.3 - Detalhe do produto (ao clicar)
+- Layout semelhante ao exemplo da Kiwify/Hudla:
+  - Logo
+  - Nome
+  - Botão: “Solicitar afiliação” ou “Afiliar agora”, de acordo com regra do produto.
+  - Categoria
+  - Modelo
+  - “Receba até” (valor máximo estimado de comissão)
+  - Link da página de vendas
+  - Descrição detalhada
+
+Sub-abas:
+- Detalhes
+  - Atribuição (como funciona a comissão: primeira venda, recorrente, ambos).
+  - E-mail de suporte para afiliação.
+- Ofertas
+  - Nome da oferta
+  - Preço
+  - “Você recebe” (comissão prevista por venda).
+
+9.4 - Fluxos de afiliação
+- Quando produto é aberto:
+  - “Afiliar agora” (livre) → já aparece nas “Minhas Afiliações” e libera links.
+  - “Solicitar afiliação” → fica pendente até o dono aprovar; status exibido no painel e no card do marketplace.
+
+10. Painel “Quem Indica”
+10.1 - Objetivo
+- Programa de indicação de novos produtores para a Plenna.
+
+10.2 - Layout
+- Tabela (como no protótipo):
+  - Data
+  - Produto / Produtor ou descrição da indicação
+  - Origem
+  - Valor da venda (se aplicável)
+  - Comissão
+  - Ações (3 pontinhos → ver detalhes)
+
+10.3 - Ação “Indicar agora”
+- Ao clicar:
+  - Modal explicando as vantagens do programa (com texto configurável).
+  - Checkbox de confirmação de que o usuário entendeu as regras.
+  - Botão “Gerar meu link de indicação”.
+- Resultado:
+  - Usuário ganha um link único de indicação.
+  - Esse link fica sempre disponível na tela de “Quem Indica”, junto com o resumo das vantagens.
+
+10.4 - Regras de comissão de indicação
+- Comissões de indicação são calculadas sobre o valor líquido (já descontadas taxas Plenna/adquirente).
+- Essas comissões aparecem:
+  - No painel de Início e Vendas (como vendas/comissões vinculadas ao usuário, quando fazer sentido).
+  - No Financeiro, como “comissões de indicação”.
+
+11. Integrações
+11.1 - Painel geral “Integrações”
+- Cards listando integrações disponíveis (ex.: ferramenta X via API, CRM, e-mail marketing, etc.).
+- Ao clicar em uma integração, abre painel específico semelhante ao protótipo:
+  - Explicação do que a integração faz.
+  - Botão “Conectar” / “Desconectar”.
+  - Campos para inserir chaves ou autorizar via OAuth (quando aplicável).
+  - Link “Ler documentação” → abre tela de documentação (conforme imagens enviadas):
+    - Explicação passo a passo
+    - Campos obrigatórios
+    - Exemplos de uso
+
+11.2 - Integrações por produto
+- No painel de integrações do produto (caso existam integrações específicas por produto), layout similar:
+  - Seleção de tipo de integração
+  - Config específica
+  - Link para documentação relativa àquele produto/integração.
+
+12. Módulo de Relatórios
+12.1 - Painel principal “Relatórios”
+- Filtros:
+  - Produto
+  - Categoria de relatório:
+    - Vendas
+    - Consumo (engajamento)
+    - Financeiro
+    - Devolutivas
+    - Modelo (país/moeda)
+- Lista de “Dashboards” disponíveis (cada entrada leva para um painel mais detalhado):
+  - Vendas
+  - Assinaturas
+  - Contratos
+  - Recuperação/Devolutivas
+  - Modelo (países/moedas)
+  - Engajamento
+  - Rastreamento de links/pixels
+  - Afiliações
+  - Coprodução
+  - Indicações
+  - Ganhos/Saúde da empresa
+  - Ganhos com taxas
+
+12.2 - Estrutura comum de cada dashboard
+- Filtro “Produto” sempre presente.
+- Filtro de período.
+- Gráfico(s) principal(is) na parte de cima:
+  - Gráficos de linha/coluna mostrando evolução mensal (12 meses) de:
+    - Status de venda
+    - Status de recebimento
+    - Status de recuperação
+- Abaixo, blocos clicáveis com métricas resumidas (cards) e links para relatórios mais detalhados.
+
+12.3 - Exemplos de relatórios detalhados (por agrupamento)
+Vendas
+- Receita líquida de vendas
+- Receita bruta de vendas
+- Relatório total de faturas
+- Receitas por vendas recebidas
+- Receitas por vendas provisionadas
+- Relatório de vencimentos e inadimplência
+- Relatório de pagamentos pendentes
+- Relatório de estornos
+
+Assinaturas
+- Receita bruta de assinaturas
+- Receita líquida de assinaturas
+- Receita por fatura de assinatura
+- Receita por assinaturas recebidas
+- Relatório de assinaturas vencidas
+- Relatório de estornos de assinaturas
+- Relatório de pagamentos pendentes
+
+Contratos
+- Receita bruta de contratos
+- Receita líquida de contratos
+- Receita por parcela
+- Relatório de contratos inadimplentes
+- Relatório de parcelas inadimplentes
+- Relatório de contratos em aberto
+- Relatório de parcelas em aberto
+- Relatórios de estornos (contrato e parcela)
+
+Recuperação/Devolutivas
+- Relatório de chargebacks
+- Relatório de reembolsos
+- Relatório de cancelamentos
+- Relatório de contestações
+- Relatórios combinados (Pago/Chargeback, Pago/Reembolso etc.)
+- Relatório de checkouts abandonados
+- Relatório de recuperação (por modelo, método de venda, método de pagamento)
+
+Modelo (País / Moeda)
+- Relatório de países com mais vendas
+- Relatório de moedas mais utilizadas
+- Relatório de modelo com mais devolutivas
+- Relatório de liquidez comparando BR x Global
+
+Engajamento
+- Relatório de horas assistidas por módulo
+- Relatório de engajamento geral do produto
+- Relatório de atividade geral (login, acessos, progresso)
+
+Links/Pixels
+- Relatório de links
+  - Atividade por link
+  - Taxa de conversão por link
+- Relatório de pixels
+  - Impressões por pixel
+  - Conversões por pixel
+  - Taxa de acerto por pixel
+
+Afiliações
+- Relatório de afiliações (quantos afiliados ativos por produto)
+- Relatório de vendas via afiliados
+- Ganhos brutos e líquidos com afiliações
+- Comparação de performance entre afiliados
+
+Coprodução
+- Vendas totais em produtos coproduzidos
+- Ganhos brutos e líquidos do produtor/coprodutor
+- Relatório de comissões por coprodução
+
+Indicações
+- Ganhos totais com quem indica
+- Ganhos líquidos com indicações
+- Relatório de ganhos por indicado
+
+Taxas e saúde da empresa
+- Ganhos com taxas (por modelo, moeda, método de venda, método de pagamento)
+- Relatório de recebíveis totais e recebíveis futuros
+- Status de saúde geral da operação (indicadores consolidados).

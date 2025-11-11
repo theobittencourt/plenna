@@ -1,92 +1,106 @@
 <template>
-  <nav class="bg-white/95 dark:bg-dark-800/95 backdrop-blur-sm border-b border-gray-200 dark:border-dark-700 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
-        <div class="flex items-center">
-          <img src="/src/assets/logo.png" alt="Plenna" style="height: 40px;" />
-        </div>
+  <!-- Sidebar -->
+  <div class="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 transform transition-transform duration-300 ease-in-out md:translate-x-0" :class="{ '-translate-x-full': !sidebarOpen }">
+    <!-- Logo -->
+    <div class="flex items-center justify-between h-16 px-6 border-b border-slate-200 dark:border-slate-700">
+      <img src="/src/assets/logo.png" alt="Plenna" class="h-24" />
+      <button @click="sidebarOpen = false" class="md:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+        <XMarkIcon class="w-5 h-5 text-slate-600 dark:text-slate-400" />
+      </button>
+    </div>
 
-        <div class="hidden md:flex items-center space-x-8">
-          <router-link to="/dashboard" class="text-gray-700 dark:text-gray-200 hover:text-primary-500 dark:hover:text-primary-400 font-medium transition-colors" :class="{ 'text-primary-500 dark:text-primary-400': $route.path === '/dashboard' }">Dashboard</router-link>
-          <router-link to="/deposits" class="text-gray-700 dark:text-gray-200 hover:text-primary-500 dark:hover:text-primary-400 font-medium transition-colors" :class="{ 'text-primary-500 dark:text-primary-400': $route.path === '/deposits' }">Depósitos</router-link>
-          <router-link to="/withdrawals" class="text-gray-700 dark:text-gray-200 hover:text-primary-500 dark:hover:text-primary-400 font-medium transition-colors" :class="{ 'text-primary-500 dark:text-primary-400': $route.path === '/withdrawals' }">Saques</router-link>
-          <router-link to="/transactions" class="text-gray-700 dark:text-gray-200 hover:text-primary-500 dark:hover:text-primary-400 font-medium transition-colors" :class="{ 'text-primary-500 dark:text-primary-400': $route.path === '/transactions' }">Transações</router-link>
-        </div>
+    <!-- Navigation -->
+    <nav class="flex-1 px-4 py-6 space-y-2">
+      <router-link v-for="item in navigation" :key="item.name" :to="item.href" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors" :class="[
+        $route.path === item.href || ($route.path.startsWith(item.href) && item.href !== '/dashboard')
+          ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 border-r-2 border-purple-500'
+          : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+      ]" @click="sidebarOpen = false">
+        <component :is="item.icon" class="w-5 h-5 mr-3" />
+        {{ item.name }}
+      </router-link>
+    </nav>
 
-        <div class="hidden md:flex items-center space-x-4">
-          <button @click="toggleDarkMode" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-700 transition-colors">
-            <SunIcon v-if="isDark" class="w-5 h-5 text-gray-700 dark:text-gray-200" />
-            <MoonIcon v-else class="w-5 h-5 text-gray-700" />
-          </button>
-          
-          <div class="flex items-center space-x-2 text-sm bg-gray-100 dark:bg-dark-700 px-3 py-2 rounded-lg">
-            <span class="text-gray-700 dark:text-gray-200">Saldo:</span>
-            <span class="font-semibold text-primary-600 dark:text-primary-400">{{ formatCurrency(authStore.user?.balance || 0) }}</span>
-          </div>
-          
-          <div class="relative" ref="userMenuRef">
-            <button @click="showUserMenu = !showUserMenu" class="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-700 transition-colors">
-              <div class="w-8 h-8 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center">
-                <span class="text-white text-sm font-medium">{{ userInitials }}</span>
-              </div>
-              <ChevronDownIcon class="w-4 h-4 text-gray-700 dark:text-gray-200" />
-            </button>
-            
-            <div v-show="showUserMenu" class="absolute right-0 mt-2 w-48 bg-white dark:bg-dark-800 rounded-xl shadow-lg border border-gray-200 dark:border-dark-700 py-2 z-50">
-              <router-link to="/profile" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-dark-700 transition-colors" @click="showUserMenu = false">Meu Perfil</router-link>
-              <button @click="logout" class="block w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-dark-700 transition-colors">Sair</button>
-            </div>
-          </div>
+    <!-- User Info -->
+    <div class="border-t border-slate-200 dark:border-slate-700 p-4">
+      <div class="flex items-center space-x-3 mb-3">
+        <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
+          <span class="text-white text-sm font-medium">{{ userInitials }}</span>
         </div>
-
-        <div class="md:hidden flex items-center space-x-2">
-          <button @click="toggleDarkMode" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-700 transition-colors">
-            <SunIcon v-if="isDark" class="w-5 h-5 text-gray-700 dark:text-gray-200" />
-            <MoonIcon v-else class="w-5 h-5 text-gray-700" />
-          </button>
-          <button @click="showMobileMenu = !showMobileMenu" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-700 transition-colors">
-            <Bars3Icon v-if="!showMobileMenu" class="w-6 h-6 text-gray-700 dark:text-gray-200" />
-            <XMarkIcon v-else class="w-6 h-6 text-gray-700 dark:text-gray-200" />
-          </button>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium text-slate-900 dark:text-white truncate">{{ authStore.user?.name }}</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 truncate">{{ authStore.user?.email }}</p>
         </div>
       </div>
-
-      <div v-show="showMobileMenu" class="md:hidden py-4 border-t border-gray-200 dark:border-dark-700">
-        <div class="space-y-2">
-          <router-link to="/dashboard" class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:text-primary-500 dark:hover:text-primary-400 font-medium transition-colors rounded-lg" @click="showMobileMenu = false">Dashboard</router-link>
-          <router-link to="/deposits" class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:text-primary-500 dark:hover:text-primary-400 font-medium transition-colors rounded-lg" @click="showMobileMenu = false">Depósitos</router-link>
-          <router-link to="/withdrawals" class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:text-primary-500 dark:hover:text-primary-400 font-medium transition-colors rounded-lg" @click="showMobileMenu = false">Saques</router-link>
-          <router-link to="/transactions" class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:text-primary-500 dark:hover:text-primary-400 font-medium transition-colors rounded-lg" @click="showMobileMenu = false">Transações</router-link>
-          <div class="border-t border-gray-200 dark:border-dark-700 pt-2 mt-2">
-            <div class="px-4 py-2 text-sm bg-gray-100 dark:bg-dark-700 rounded-lg mx-2">
-              <span class="text-gray-700 dark:text-gray-200">Saldo: </span>
-              <span class="font-semibold text-primary-600 dark:text-primary-400">{{ formatCurrency(authStore.user?.balance || 0) }}</span>
-            </div>
-            <router-link to="/profile" class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:text-primary-500 dark:hover:text-primary-400 font-medium transition-colors rounded-lg" @click="showMobileMenu = false">Meu Perfil</router-link>
-            <button @click="logout" class="block w-full text-left px-4 py-2 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 font-medium transition-colors rounded-lg">Sair</button>
-          </div>
+      
+      <div class="bg-slate-50 dark:bg-slate-800 rounded-lg p-3 mb-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-slate-600 dark:text-slate-400">Saldo Disponível</span>
+          <span class="text-sm font-semibold text-purple-600 dark:text-purple-400">{{ formatCurrency(authStore.user?.balance || 0) }}</span>
         </div>
+      </div>
+      
+      <div class="flex space-x-2">
+        <button @click="toggleDarkMode" class="flex-1 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+          <SunIcon v-if="isDark" class="w-4 h-4 text-slate-600 dark:text-slate-400 mx-auto" />
+          <MoonIcon v-else class="w-4 h-4 text-slate-600 mx-auto" />
+        </button>
+        <button @click="logout" class="flex-1 p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+          <ArrowRightOnRectangleIcon class="w-4 h-4 text-red-600 dark:text-red-400 mx-auto" />
+        </button>
       </div>
     </div>
-  </nav>
+  </div>
+
+  <!-- Mobile Menu Button -->
+  <button @click="sidebarOpen = true" class="md:hidden fixed top-4 left-4 z-50 p-2 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700">
+    <Bars3Icon class="w-5 h-5 text-slate-600 dark:text-slate-400" />
+  </button>
+
+  <!-- Mobile Sidebar Overlay -->
+  <div v-if="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 z-40 bg-black bg-opacity-50 md:hidden"></div>
+
+
 </template>
 
 <script>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
-import { ChevronDownIcon, Bars3Icon, XMarkIcon, SunIcon, MoonIcon } from '@heroicons/vue/24/outline'
+import { 
+  Bars3Icon, 
+  XMarkIcon, 
+  SunIcon, 
+  MoonIcon, 
+  ArrowRightOnRectangleIcon,
+  HomeIcon,
+  CubeIcon,
+  ShareIcon,
+  UserGroupIcon,
+  ChartBarIcon,
+  UserIcon,
+  CogIcon
+} from '@heroicons/vue/24/outline'
 
 export default {
   name: 'NavBar',
-  components: { ChevronDownIcon, Bars3Icon, XMarkIcon, SunIcon, MoonIcon },
+  components: { Bars3Icon, XMarkIcon, SunIcon, MoonIcon, ArrowRightOnRectangleIcon, HomeIcon, CubeIcon, ShareIcon, UserGroupIcon, ChartBarIcon, UserIcon, CogIcon },
   setup() {
     const router = useRouter()
+    const route = useRoute()
     const authStore = useAuthStore()
-    const showUserMenu = ref(false)
-    const showMobileMenu = ref(false)
-    const userMenuRef = ref(null)
+    const sidebarOpen = ref(false)
     const isDark = ref(false)
+
+    const navigation = [
+      { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
+      { name: 'Produtos', href: '/products', icon: CubeIcon },
+      { name: 'Afiliação', href: '/affiliate-market', icon: ShareIcon },
+      { name: 'Quem Indica', href: '/referrals', icon: UserGroupIcon },
+      { name: 'Relatórios', href: '/reports', icon: ChartBarIcon },
+      { name: 'Integrações', href: '/integrations', icon: CogIcon },
+      { name: 'Perfil', href: '/profile', icon: UserIcon }
+    ]
 
     const userInitials = computed(() => {
       if (!authStore.user?.name) return 'U'
@@ -108,29 +122,28 @@ export default {
       }
     }
 
+
+
     const logout = async () => {
       await authStore.logout()
-      showUserMenu.value = false
-      showMobileMenu.value = false
+      sidebarOpen.value = false
       router.push('/')
     }
 
-    const handleClickOutside = (event) => {
-      if (userMenuRef.value && !userMenuRef.value.contains(event.target)) {
-        showUserMenu.value = false
-      }
-    }
-
     onMounted(() => {
-      document.addEventListener('click', handleClickOutside)
       isDark.value = document.documentElement.classList.contains('dark')
     })
 
-    onUnmounted(() => {
-      document.removeEventListener('click', handleClickOutside)
-    })
-
-    return { authStore, showUserMenu, showMobileMenu, userMenuRef, userInitials, isDark, formatCurrency, toggleDarkMode, logout }
+    return { 
+      authStore, 
+      sidebarOpen, 
+      userInitials, 
+      isDark, 
+      navigation,
+      formatCurrency, 
+      toggleDarkMode, 
+      logout
+    }
   }
 }
 </script>

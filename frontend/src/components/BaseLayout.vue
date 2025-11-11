@@ -1,16 +1,15 @@
 <template>
-  <div class="page-container">
-    <main class="content-wrapper">
+  <div class="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <div class="p-6">
       <!-- Breadcrumb -->
       <Breadcrumb v-if="breadcrumbs" :items="breadcrumbs" class="mb-6" />
       
       <!-- Page Header -->
-      <div class="page-header" v-if="title || subtitle || $slots.header">
+      <div v-if="subtitle || $slots.header" class="mb-8">
         <slot name="header">
           <div class="flex justify-between items-start">
             <div>
-              <h1 v-if="title" class="page-title">{{ title }}</h1>
-              <p v-if="subtitle" class="page-subtitle">{{ subtitle }}</p>
+              <p v-if="subtitle" class="text-slate-600 dark:text-slate-400">{{ subtitle }}</p>
             </div>
             <div v-if="$slots.actions" class="flex items-center space-x-4">
               <slot name="actions" />
@@ -23,7 +22,7 @@
       <div class="animate-fade-in-up">
         <slot />
       </div>
-    </main>
+    </div>
   </div>
 </template>
 

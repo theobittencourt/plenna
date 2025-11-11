@@ -68,6 +68,10 @@ model User {
   depositos               Solicitacao[]
   saques                  SolicitacaoCashOut[]
   transactions            Transaction[]
+  products                Product[]
+  productAffiliates       ProductAffiliate[]
+  referral                Referral?
+  integrations            Integration[]
   usersKey                UsersKey?
   indicados               User[]    @relation("UserIndicacao")
   indicador               User?     @relation("UserIndicacao", fields: [indicadorRef], references: [codeRef])
@@ -312,4 +316,104 @@ model Nivel {
   updatedAt       DateTime @updatedAt @map("updated_at")
 
   @@map("nivels")
+}
+
+model Product {
+  id                            Int      @id @default(autoincrement())
+  userId                        String   @map("user_id")
+  name                          String
+  description                   String?  @db.Text
+  category                      String
+  price                         Decimal  @db.Decimal(10, 2)
+  image                         String?
+  salesUrl                      String?  @map("sales_url")
+  affiliateEnabled              Boolean  @default(false) @map("affiliate_enabled")
+  affiliateType                 String   @default("open") @map("affiliate_type")
+  affiliateCommission           Decimal  @default(0) @map("affiliate_commission") @db.Decimal(5, 2)
+  affiliateRecurringCommission  Decimal  @default(0) @map("affiliate_recurring_commission") @db.Decimal(5, 2)
+  status                        String   @default("active")
+  createdAt                     DateTime @default(now()) @map("created_at")
+  updatedAt                     DateTime @updatedAt @map("updated_at")
+
+  user                          User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  partners                      ProductPartner[]
+  affiliates                    ProductAffiliate[]
+
+  @@map("products")
+}
+
+model ProductPartner {
+  id              Int      @id @default(autoincrement())
+  productId       Int      @map("product_id")
+  partnerEmail    String   @map("partner_email")
+  commission      Decimal  @db.Decimal(5, 2)
+  status          String   @default("pending")
+  endDate         DateTime? @map("end_date")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  product         Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("product_partners")
+}
+
+model ProductAffiliate {
+  id              Int      @id @default(autoincrement())
+  productId       Int      @map("product_id")
+  userId          String   @map("user_id")
+  status          String   @default("pending")
+  totalSales      Int      @default(0) @map("total_sales")
+  totalCommissions Decimal @default(0) @map("total_commissions") @db.Decimal(10, 2)
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  product         Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user            User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  @@map("product_affiliates")
+}
+
+model Referral {
+  id              Int      @id @default(autoincrement())
+  userId          String   @unique @map("user_id")
+  referralLink    String   @unique @map("referral_link")
+  totalReferrals  Int      @default(0) @map("total_referrals")
+  totalEarnings   Decimal  @default(0) @map("total_earnings") @db.Decimal(10, 2)
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  user            User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  referralSales   ReferralSale[]
+
+  @@map("referrals")
+}
+
+model ReferralSale {
+  id              Int      @id @default(autoincrement())
+  referralId      Int      @map("referral_id")
+  producerName    String   @map("producer_name")
+  producerEmail   String   @map("producer_email")
+  origin          String
+  saleValue       Decimal  @map("sale_value") @db.Decimal(10, 2)
+  commission      Decimal  @db.Decimal(10, 2)
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  referral        Referral @relation(fields: [referralId], references: [id], onDelete: Cascade)
+
+  @@map("referral_sales")
+}
+
+model Integration {
+  id              Int      @id @default(autoincrement())
+  userId          String   @map("user_id")
+  name            String
+  type            String
+  config          Json
+  status          String   @default("disconnected")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  user            User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  @@map("integrations")
 }

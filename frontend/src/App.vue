@@ -1,24 +1,25 @@
 <template>
-  <div id="app" class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-dark-900 dark:to-dark-800">
+  <div id="app" class="min-h-screen">
     <!-- Navigation -->
     <NavBar v-if="showNavigation" />
     
     <!-- Main Content -->
-    <main :class="{ 'pt-0': !showNavigation }">
+    <div v-if="showNavigation">
       <router-view />
-    </main>
-    
-    <!-- Footer -->
-    <AppFooter />
+    </div>
+    <div v-else class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+      <router-view />
+      <AppFooter />
+    </div>
     
     <!-- Toast Notifications -->
     <Toast />
     
     <!-- Global Loading -->
     <div v-if="loading" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center px-4">
-      <div class="bg-white rounded-2xl p-6 sm:p-8 flex flex-col items-center space-y-4 max-w-sm w-full">
-        <div class="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-primary-600"></div>
-        <p class="text-gray-600 font-medium text-sm sm:text-base">Carregando...</p>
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-8 flex flex-col items-center space-y-4 max-w-sm w-full">
+        <div class="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-purple-600"></div>
+        <p class="text-slate-600 dark:text-slate-400 font-medium text-sm sm:text-base">Carregando...</p>
       </div>
     </div>
   </div>

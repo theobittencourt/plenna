@@ -1,52 +1,31 @@
 <template>
-  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" @click="closeModal">
-    <div 
-      class="bg-white dark:bg-dark-800 rounded-2xl shadow-2xl max-w-md w-full p-6 transform transition-all duration-300"
-      @click.stop
-    >
-      <!-- Header -->
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ title }}</h3>
-        <button 
-          @click="closeModal"
-          class="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-        >
-          <XMarkIcon class="w-5 h-5 text-gray-500" />
-        </button>
-      </div>
+  <Teleport to="body">
+    <div v-if="modelValue" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] flex items-center justify-center p-4" @click="closeModal">
+      <div 
+        :class="[
+          'bg-white dark:bg-slate-800 rounded-2xl shadow-2xl transform transition-all duration-300 p-6',
+          sizeClasses
+        ]"
+        @click.stop
+      >
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold text-slate-900 dark:text-white">{{ title }}</h3>
+          <button 
+            @click="closeModal"
+            class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+          >
+            <XMarkIcon class="w-5 h-5 text-slate-500 dark:text-slate-400" />
+          </button>
+        </div>
 
-      <!-- Content -->
-      <div class="mb-6">
-        <slot />
-      </div>
-
-      <!-- Actions -->
-      <div class="flex space-x-3 justify-end">
-        <button 
-          v-if="showCancel"
-          @click="closeModal"
-          class="btn-secondary"
-        >
-          {{ cancelText }}
-        </button>
-        <button 
-          v-if="showConfirm"
-          @click="confirmAction"
-          class="btn-primary"
-          :disabled="loading"
-        >
-          <span v-if="loading" class="flex items-center">
-            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            Carregando...
-          </span>
-          <span v-else>{{ confirmText }}</span>
-        </button>
+        <!-- Content -->
+        <div>
+          <slot />
+        </div>
       </div>
     </div>
-  </div>
+  </Teleport>
 </template>
 
 <script>
@@ -58,44 +37,39 @@ export default {
     XMarkIcon
   },
   props: {
+    modelValue: {
+      type: Boolean,
+      default: false
+    },
     title: {
       type: String,
       default: 'Modal'
     },
-    showCancel: {
-      type: Boolean,
-      default: true
-    },
-    showConfirm: {
-      type: Boolean,
-      default: true
-    },
-    cancelText: {
+    size: {
       type: String,
-      default: 'Cancelar'
-    },
-    confirmText: {
-      type: String,
-      default: 'Confirmar'
-    },
-    loading: {
-      type: Boolean,
-      default: false
+      default: 'md',
+      validator: (value) => ['sm', 'md', 'lg', 'xl'].includes(value)
     }
   },
-  emits: ['close', 'confirm'],
+  emits: ['update:modelValue'],
+  computed: {
+    sizeClasses() {
+      const sizes = {
+        sm: 'max-w-sm w-full',
+        md: 'max-w-md w-full',
+        lg: 'max-w-2xl w-full',
+        xl: 'max-w-4xl w-full'
+      }
+      return sizes[this.size]
+    }
+  },
   setup(props, { emit }) {
     const closeModal = () => {
-      emit('close')
-    }
-
-    const confirmAction = () => {
-      emit('confirm')
+      emit('update:modelValue', false)
     }
 
     return {
-      closeModal,
-      confirmAction
+      closeModal
     }
   }
 }

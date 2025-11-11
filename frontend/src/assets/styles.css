@@ -1,0 +1,126 @@
+/* Global Styles for Plenna */
+
+/* Ensure proper dark mode transitions */
+* {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100 dark:bg-slate-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 dark:bg-slate-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400 dark:bg-slate-500;
+}
+
+/* Animation classes */
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Focus styles */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800;
+}
+
+/* Card styles */
+.card {
+  @apply bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium transition-colors focus-ring;
+}
+
+.btn-secondary {
+  @apply bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-lg font-medium transition-colors focus-ring;
+}
+
+/* Input styles */
+.input {
+  @apply w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-slate-700 dark:text-white transition-colors;
+}
+
+/* Text styles */
+.text-primary {
+  @apply text-slate-900 dark:text-white;
+}
+
+.text-secondary {
+  @apply text-slate-600 dark:text-slate-400;
+}
+
+.text-muted {
+  @apply text-slate-500 dark:text-slate-500;
+}
+
+/* Background styles */
+.bg-primary {
+  @apply bg-white dark:bg-slate-800;
+}
+
+.bg-secondary {
+  @apply bg-slate-50 dark:bg-slate-900;
+}
+
+/* Border styles */
+.border-primary {
+  @apply border-slate-200 dark:border-slate-700;
+}
+
+/* Hover states */
+.hover-bg {
+  @apply hover:bg-slate-50 dark:hover:bg-slate-700/50;
+}
+
+/* Mobile responsive utilities */
+@media (max-width: 768px) {
+  .mobile-padding {
+    @apply px-4 py-4;
+  }
+  
+  .mobile-text {
+    @apply text-sm;
+  }
+  
+  .mobile-title {
+    @apply text-xl;
+  }
+}
+
+/* Desktop utilities */
+@media (min-width: 768px) {
+  .desktop-padding {
+    @apply px-6 py-6;
+  }
+  
+  .desktop-text {
+    @apply text-base;
+  }
+  
+  .desktop-title {
+    @apply text-2xl;
+  }
+}

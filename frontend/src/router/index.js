@@ -7,7 +7,8 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/HomeView.vue')
+      component: () => import('../views/HomeView.vue'),
+      meta: { guest: true }
     },
     {
       path: '/login',
@@ -79,6 +80,47 @@ const router = createRouter({
       name: 'transactions',
       component: () => import('../views/TransactionsView.vue'),
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/products',
+      name: 'products',
+      component: () => import('../views/ProductsView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/products/:id',
+      name: 'product-detail',
+      component: () => import('../views/ProductDetailView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/affiliate-market',
+      name: 'affiliate-market',
+      component: () => import('../views/AffiliateMarketView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/referrals',
+      name: 'referrals',
+      component: () => import('../views/ReferralsView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/reports',
+      name: 'reports',
+      component: () => import('../views/ReportsView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/integrations',
+      name: 'integrations',
+      component: () => import('../views/IntegrationsView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/product/:userId/:productId',
+      name: 'product-public',
+      component: () => import('../views/ProductPublicView.vue')
     },
     {
       path: '/:pathMatch(.*)*',

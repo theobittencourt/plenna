@@ -9,10 +9,14 @@ import { DepositsModule } from './deposits/deposits.module';
 import { WithdrawalsModule } from './withdrawals/withdrawals.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { AdquirentesModule } from './adquirentes/adquirentes.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({ 
+      isGlobal: true,
+      envFilePath: '.env'
+    }),
     ScheduleModule.forRoot(),
     PrismaModule,
     AuthModule,
@@ -22,6 +26,7 @@ import { AdquirentesModule } from './adquirentes/adquirentes.module';
     WithdrawalsModule,
     TransactionsModule,
     AdquirentesModule,
+    ProductsModule,
   ],
 })
 export class AppModule {}
