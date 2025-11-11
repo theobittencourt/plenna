@@ -137,12 +137,13 @@
 import { ref, reactive, onMounted, nextTick, watch } from 'vue'
 import { 
   ArrowDownTrayIcon, 
-  TrendingUpIcon, 
-  TrendingDownIcon,
+  ArrowTrendingUpIcon as TrendingUpIcon,
+  ArrowTrendingDownIcon as TrendingDownIcon,
   CurrencyDollarIcon,
   ChartBarIcon,
   UserGroupIcon
 } from '@heroicons/vue/24/outline'
+const ArrowTrendingUpIcon = TrendingUpIcon
 import StatusBadge from '@/components/StatusBadge.vue'
 import { Chart, registerables } from 'chart.js'
 import api from '@/services/api'
@@ -319,7 +320,7 @@ onMounted(async () => {
         { id: 'revenue', label: 'Receita Total', value: 'R$ 45.200', trend: 'up', change: '+12%', icon: CurrencyDollarIcon },
         { id: 'orders', label: 'Pedidos', value: '156', trend: 'up', change: '+8%', icon: ChartBarIcon },
         { id: 'avg_ticket', label: 'Ticket Médio', value: 'R$ 290', trend: 'down', change: '-3%', icon: CurrencyDollarIcon },
-        { id: 'conversion', label: 'Conversão', value: '3.2%', trend: 'up', change: '+0.5%', icon: TrendingUpIcon }
+        { id: 'conversion', label: 'Conversão', value: '3.2%', trend: 'up', change: '+0.5%', icon: ArrowTrendingUpIcon }
       ]
       break
     case 'affiliates':
