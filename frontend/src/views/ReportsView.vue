@@ -147,7 +147,7 @@ import {
   CurrencyDollarIcon,
   UserGroupIcon,
   DocumentChartBarIcon,
-  TrendingUpIcon,
+  ArrowTrendingUpIcon as TrendingUpIcon,
   ShoppingCartIcon
 } from '@heroicons/vue/24/outline'
 import BaseModal from '@/components/BaseModal.vue'
