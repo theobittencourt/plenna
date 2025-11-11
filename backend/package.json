@@ -10,7 +10,7 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
-    "vercel-build": "nest build && npx prisma generate"
+  "vercel-build": "npx prisma generate"
   },
   "dependencies": {
     "@nestjs/axios": "^3.0.1",
