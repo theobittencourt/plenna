@@ -54,9 +54,9 @@ export class DepositsService {
     await this.prisma.solicitacao.update({
       where: { id: deposit.id },
       data: {
-        idTransaction: response.idTransaction,
-        paymentCode: response.paymentCode,
-        qrCode: response.qrCode,
+        idTransaction: response.paymentId || response.idTransaction,
+        paymentCode: response.pixCode || response.paymentCode,
+        qrCode: response.pixCode || response.qrCode,
         qrCodeImage: response.qrCodeImage,
       },
     });

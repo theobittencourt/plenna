@@ -308,35 +308,12 @@ export default {
 /* Plenna Home Styles */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;600;700;800&display=swap');
 
-:root {
-  --pl-grad-bg: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-  --pl-grad-secondary: linear-gradient(135deg, #00d4aa 0%, #00a693 100%);
-  --pl-grad-accent: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --pl-white: #ffffff;
-  --pl-muted: #a1a1aa;
-  --pl-black: #000000;
-  --pl-surface: rgba(255, 255, 255, 0.05);
-  --pl-border: rgba(255, 255, 255, 0.1);
-  --shadow-modern: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  --shadow-card: 0 10px 25px -5px rgba(0, 212, 170, 0.1), 0 10px 10px -5px rgba(0, 212, 170, 0.04);
-  --shadow-card-hover: 0 20px 40px -10px rgba(0, 212, 170, 0.2);
-  --container: 1200px;
-  --blur: blur(20px);
-  --spacing-xs: 1rem;
-  --spacing-sm: 2rem;
-  --spacing-md: 3rem;
-  --spacing-lg: 4rem;
-  --spacing-xl: 6rem;
-  --spacing-2xl: 8rem;
-  --radius-sm: 0.5rem;
-  --radius-md: 1rem;
-  --radius-lg: 1.5rem;
-}
+
 
 .home {
   font-family: 'Inter', 'Montserrat', system-ui, sans-serif;
-  color: var(--pl-white);
-  background: var(--pl-grad-bg);
+  color: #ffffff;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
   overflow-x: hidden;
   position: relative;
   min-height: 100vh;
@@ -386,7 +363,7 @@ main {
 }
 
 .container {
-  max-width: var(--container);
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 4rem;
   width: 100%;
@@ -449,13 +426,13 @@ section {
 
 @media (max-width: 768px) {
   section {
-    padding: var(--spacing-xl) 0;
+    padding: 6rem 0;
   }
 }
 
 @media (max-width: 480px) {
   section {
-    padding: var(--spacing-lg) 0;
+    padding: 4rem 0;
   }
 }
 
@@ -488,7 +465,7 @@ section {
 .section-subtitle {
   font-size: clamp(1rem, 2.5vw, 1.375rem);
   font-weight: 400;
-  color: var(--pl-muted);
+  color: #a1a1aa;
   margin: 0 auto;
   max-width: 700px;
   line-height: 1.7;
@@ -497,7 +474,7 @@ section {
 
 p {
   font-size: 1rem;
-  color: var(--pl-muted);
+  color: #a1a1aa;
   line-height: 1.7;
   letter-spacing: 0.01em;
 }
@@ -763,7 +740,7 @@ p {
 }
 
 .btn-primary {
-  color: var(--pl-white);
+  color: #ffffff;
   font-weight: 500;
   text-decoration: none;
   padding: 0.875rem 1.5rem;
@@ -816,7 +793,7 @@ p {
 
 
 .btn-outline {
-  color: var(--pl-white);
+  color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.2);
   text-decoration: none;
   padding: 0.875rem 1.5rem;
@@ -902,7 +879,7 @@ p {
 @media (max-width: 768px) {
   .products-grid {
     grid-template-columns: 1fr;
-    gap: var(--spacing-sm);
+    gap: 2rem;
   }
 }
 
@@ -960,7 +937,7 @@ p {
 .product-card h3 {
   font-size: 1.125rem;
   font-weight: 600;
-  color: var(--pl-white);
+  color: #ffffff;
   margin-bottom: 1rem;
   letter-spacing: -0.01em;
   line-height: 1.4;
@@ -1024,7 +1001,7 @@ p {
 .pricing-header h3 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--pl-white);
+  color: #ffffff;
   margin-bottom: 0.5rem;
 }
 
@@ -1068,7 +1045,7 @@ p {
 .metric-value {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--pl-white);
+  color: #ffffff;
 }
 
 .metric-value.base {
@@ -1126,7 +1103,7 @@ p {
   border-radius: 8px;
   padding: 0.75rem;
   font-size: 0.875rem;
-  color: var(--pl-white);
+  color: #ffffff;
   font-weight: 500;
   text-align: center;
 }
@@ -1146,7 +1123,7 @@ p {
 .pricing-card h3 {
   font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: 2rem;
   text-align: center;
 }
 
@@ -1156,14 +1133,14 @@ p {
 
 .pricing-desc {
   text-align: center;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: 3rem;
   font-size: 0.9rem;
   opacity: 0.9;
 }
 
 .pricing-kpi {
   text-align: center;
-  margin: var(--spacing-md) 0;
+  margin: 3rem 0;
 }
 
 .rate {
@@ -1181,7 +1158,7 @@ p {
 .pricing-items {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: 2rem;
 }
 
 .pricing-item {
@@ -1189,8 +1166,8 @@ p {
   justify-content: space-between;
   align-items: center;
   background: rgba(0, 0, 0, 0.25);
-  border-radius: var(--radius-sm);
-  padding: var(--spacing-sm);
+  border-radius: 0.5rem;
+  padding: 2rem;
 }
 
 .pricing-item .label {
@@ -1213,24 +1190,24 @@ p {
 
 .features-list {
   display: grid;
-  gap: var(--spacing-xs);
-  margin-top: var(--spacing-md);
+  gap: 1rem;
+  margin-top: 3rem;
 }
 
 .feature {
   background: rgba(0, 0, 0, 0.25);
-  border-radius: var(--radius-sm);
-  padding: var(--spacing-sm);
+  border-radius: 0.5rem;
+  padding: 2rem;
   font-size: 0.9rem;
   color: #bfeeed;
 }
 
 .zero-fee-card {
-  background: var(--pl-grad-secondary);
-  color: var(--pl-white);
+  background: linear-gradient(135deg, #00d4aa 0%, #00a693 100%);
+  color: #ffffff;
   border-radius: 24px;
   padding: 3rem;
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 10px 25px -5px rgba(0, 212, 170, 0.1), 0 10px 10px -5px rgba(0, 212, 170, 0.04);
   text-align: center;
   margin: 0 1rem;
 }
@@ -1251,11 +1228,11 @@ p {
 .zero-fee-card h3 {
   font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: 2rem;
 }
 
 .zero-fee-card p {
-  color: var(--pl-white);
+  color: #ffffff;
   opacity: 0.9;
   line-height: 1.6;
 }
@@ -1285,9 +1262,9 @@ p {
 }
 
 .company-story {
-  background: var(--pl-grad-secondary);
+  background: linear-gradient(135deg, #00d4aa 0%, #00a693 100%);
   border-radius: 24px;
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 10px 25px -5px rgba(0, 212, 170, 0.1), 0 10px 10px -5px rgba(0, 212, 170, 0.04);
   padding: 3rem;
 }
 
@@ -1306,14 +1283,14 @@ p {
 .company-story h3 {
   font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: var(--spacing-sm);
-  color: var(--pl-white);
+  margin-bottom: 2rem;
+  color: #ffffff;
 }
 
 .company-story p {
-  color: var(--pl-white);
+  color: #ffffff;
   line-height: 1.7;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: 3rem;
 }
 
 .company-story p:last-child {
@@ -1326,9 +1303,9 @@ p {
 }
 
 .founder-card {
-  background: var(--pl-grad-secondary);
+  background: linear-gradient(135deg, #00d4aa 0%, #00a693 100%);
   border-radius: 20px;
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 10px 25px -5px rgba(0, 212, 170, 0.1), 0 10px 10px -5px rgba(0, 212, 170, 0.04);
   padding: 1.5rem;
   display: grid;
   grid-template-columns: 1fr;
@@ -1378,7 +1355,7 @@ p {
 }
 
 .founder-image img {
-  border-radius: var(--radius-md);
+  border-radius: 1rem;
   width: 100%;
   height: auto;
   max-width: 120px;
@@ -1389,8 +1366,8 @@ p {
 .founder-info h4 {
   font-weight: 700;
   font-size: 1.125rem;
-  color: var(--pl-white);
-  margin-bottom: var(--spacing-xs);
+  color: #ffffff;
+  margin-bottom: 1rem;
   line-height: 1.3;
 }
 
@@ -1399,11 +1376,11 @@ p {
   color: #00d4aa;
   font-weight: 600;
   display: block;
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: 2rem;
 }
 
 .founder-info p {
-  color: var(--pl-white);
+  color: #ffffff;
   font-size: 0.9rem;
   line-height: 1.6;
   opacity: 0.9;
@@ -1419,23 +1396,23 @@ p {
 }
 
 .faq-item {
-  background: var(--pl-grad-secondary);
+  background: linear-gradient(135deg, #00d4aa 0%, #00a693 100%);
   border-radius: 24px;
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 10px 25px -5px rgba(0, 212, 170, 0.1), 0 10px 10px -5px rgba(0, 212, 170, 0.04);
   overflow: hidden;
   transition: all 0.3s ease;
 }
 
 .faq-item:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-card-hover);
+  box-shadow: 0 20px 40px -10px rgba(0, 212, 170, 0.2);
 }
 
 .faq-item summary {
   list-style: none;
   cursor: pointer;
   outline: none;
-  color: var(--pl-white);
+  color: #ffffff;
   font-weight: 700;
   font-size: 1rem;
   padding: 1.5rem;
@@ -1520,7 +1497,7 @@ p {
 }
 
 .faq-content p {
-  color: var(--pl-white);
+  color: #ffffff;
   line-height: 1.6;
   opacity: 0.9;
   margin: 0;
@@ -1530,8 +1507,8 @@ p {
 .footer {
   margin-top: 4rem;
   padding: 2rem 1rem;
-  background: var(--pl-grad-secondary);
-  color: var(--pl-black);
+  background: linear-gradient(135deg, #00d4aa 0%, #00a693 100%);
+  color: #000000;
   text-align: center;
   box-shadow: 0 -8px 24px rgba(0, 255, 195, 0.18);
   font-size: 0.8rem;
@@ -1555,13 +1532,13 @@ p {
 
 @media (max-width: 640px) {
   .footer {
-    padding: var(--spacing-md) var(--spacing-sm);
+    padding: 3rem 2rem;
     font-size: 0.8rem;
   }
 }
 
 .footer a {
-  color: var(--pl-black);
+  color: #000000;
   text-decoration: none;
   font-weight: 700;
   transition: opacity 0.3s ease;
@@ -1627,7 +1604,7 @@ p {
 
 @media (max-width: 360px) {
   .container {
-    padding: 0 var(--spacing-sm);
+    padding: 0 2rem;
   }
   
   .product-card,
@@ -1635,7 +1612,7 @@ p {
   .company-story,
   .founder-card,
   .zero-fee-card {
-    padding: var(--spacing-md);
+    padding: 3rem;
   }
 }
 </style>

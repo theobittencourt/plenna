@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { PixupService } from './services/pixup.service';
 import { CashtimeService } from './services/cashtime.service';
 import { MercadopagoService } from './services/mercadopago.service';
+import { AsaasService } from './services/asaas.service';
+import { PagarmeService } from './services/pagarme.service';
 
 @Injectable()
 export class AdquirentesService {
@@ -9,6 +11,8 @@ export class AdquirentesService {
     private pixupService: PixupService,
     private cashtimeService: CashtimeService,
     private mercadopagoService: MercadopagoService,
+    private asaasService: AsaasService,
+    private pagarmeService: PagarmeService,
   ) {}
 
   async processDeposit(adquirente: string, data: any) {
@@ -19,6 +23,10 @@ export class AdquirentesService {
         return this.cashtimeService.createDeposit(data);
       case 'mercadopago':
         return this.mercadopagoService.createDeposit(data);
+      case 'asaas':
+        return this.asaasService.createPixPayment(data);
+      case 'pagarme':
+        return this.pagarmeService.createPixPayment(data);
       default:
         throw new Error('Adquirente não suportado');
     }
@@ -30,6 +38,10 @@ export class AdquirentesService {
         return this.pixupService.createWithdrawal(data);
       case 'cashtime':
         return this.cashtimeService.createWithdrawal(data);
+      case 'asaas':
+        return this.asaasService.createPixTransfer(data);
+      case 'pagarme':
+        return this.pagarmeService.createPixTransfer(data);
       default:
         throw new Error('Adquirente não suporta saques');
     }

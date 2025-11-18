@@ -116,7 +116,7 @@ export default {
   padding: 4px;
   max-height: 65px;
   border-radius: 8px;
-  /* background: linear-gradient(135deg, rgba(0, 212, 170, 0.06) 0%, rgba(102, 126, 234, 0.06) 100%); */
+  background: rgba(15, 15, 35, 0.8);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(0, 212, 170, 0.12);
   box-shadow: 0 4px 15px -6px rgba(0, 0, 0, 0.15);
@@ -191,7 +191,7 @@ export default {
 
 .nav a {
   text-decoration: none;
-  color: white;
+  color: #ffffff;
   font-weight: 500;
   font-size: 12px;
   letter-spacing: 0.02em;
@@ -281,14 +281,14 @@ export default {
 }
 
 .btn-login:hover {
-  color: white;
+  color: #ffffff;
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.3);
 }
 
 .btn-register {
   background: #a855f7;
-  color: white;
+  color: #ffffff;
   text-decoration: none;
   font-weight: 600;
   font-size: 14px;
@@ -306,7 +306,7 @@ export default {
 
 .mobile-menu-btn {
   background: rgba(255, 255, 255, 0.06);
-  color: white;
+  color: #ffffff;
   padding: 3px;
   border-radius: 4px;
   border: none;
@@ -348,7 +348,7 @@ export default {
   width: 100%;
   padding: 12px 16px;
   text-decoration: none;
-  color: white;
+  color: #ffffff;
   font-size: 15px;
   font-weight: 500;
   border-radius: 12px;

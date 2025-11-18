@@ -76,7 +76,7 @@ export class WithdrawalsService {
         where: { id },
         data: {
           status: 'approved',
-          idTransaction: response.idTransaction,
+          idTransaction: response.transferId || response.idTransaction,
           dataPagamento: new Date(),
         },
       });
