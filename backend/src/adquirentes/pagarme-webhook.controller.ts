@@ -17,12 +17,12 @@ export class PagarmeWebhookController {
       if (type === 'order.paid' && data?.metadata?.external_reference) {
         await this.prisma.solicitacao.updateMany({
           where: { 
-            external_id: data.metadata.external_reference,
+            externalreference: data.metadata.external_reference,
             status: 'pending'
           },
           data: { 
             status: 'approved',
-            updated_at: new Date()
+            updatedAt: new Date()
           }
         });
 

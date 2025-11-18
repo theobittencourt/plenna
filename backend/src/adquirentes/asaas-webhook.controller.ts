@@ -17,12 +17,12 @@ export class AsaasWebhookController {
       if (event === 'PAYMENT_RECEIVED' && payment?.externalReference) {
         await this.prisma.solicitacao.updateMany({
           where: { 
-            external_id: payment.externalReference,
+            externalreference: payment.externalReference,
             status: 'pending'
           },
           data: { 
             status: 'approved',
-            updated_at: new Date()
+            updatedAt: new Date()
           }
         });
 
