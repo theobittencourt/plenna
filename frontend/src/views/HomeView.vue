@@ -161,7 +161,7 @@
           <div class="founders-grid">
             <div class="founder-card">
               <div class="founder-image">
-                <img src="/src/assets/images/fundador-1.jpg" alt="João Gabriel Mansour" />
+                <img :src="fundador1Image" alt="João Gabriel Mansour" />
               </div>
               <div class="founder-info">
                 <h4>João Gabriel Mansour</h4>
@@ -171,7 +171,7 @@
             </div>
             <div class="founder-card">
               <div class="founder-image">
-                <img src="/src/assets/images/fundador-2.jpg" alt="João Pedro Duarte" />
+                <img :src="fundador2Image" alt="João Pedro Duarte" />
               </div>
               <div class="founder-info">
                 <h4>João Pedro Duarte</h4>
@@ -249,18 +249,21 @@ export default {
   components: {
     LandingNavbar
   },
+
   data() {
     return {
       currentSlide: 0,
+      fundador1Image: new URL('@/assets/images/fundador-1.jpg', import.meta.url).href,
+      fundador2Image: new URL('@/assets/images/fundador-2.jpg', import.meta.url).href,
       carouselImages: [
-        { src: '/src/assets/images/1.png', alt: 'Dashboard Plenna 1' },
-        { src: '/src/assets/images/2.png', alt: 'Dashboard Plenna 2' },
-        { src: '/src/assets/images/3.png', alt: 'Dashboard Plenna 3' },
-        { src: '/src/assets/images/4.png', alt: 'Dashboard Plenna 4' },
-        { src: '/src/assets/images/5.png', alt: 'Dashboard Plenna 4' },
-        { src: '/src/assets/images/6.png', alt: 'Dashboard Plenna 6' },
-        { src: '/src/assets/images/7.png', alt: 'Dashboard Plenna 7' },
-        { src: '/src/assets/images/8.png', alt: 'Dashboard Plenna 7' },
+        { src: new URL('@/assets/images/1.png', import.meta.url).href, alt: 'Dashboard Plenna 1' },
+        { src: new URL('@/assets/images/2.png', import.meta.url).href, alt: 'Dashboard Plenna 2' },
+        { src: new URL('@/assets/images/3.png', import.meta.url).href, alt: 'Dashboard Plenna 3' },
+        { src: new URL('@/assets/images/4.png', import.meta.url).href, alt: 'Dashboard Plenna 4' },
+        { src: new URL('@/assets/images/5.png', import.meta.url).href, alt: 'Dashboard Plenna 5' },
+        { src: new URL('@/assets/images/6.png', import.meta.url).href, alt: 'Dashboard Plenna 6' },
+        { src: new URL('@/assets/images/7.png', import.meta.url).href, alt: 'Dashboard Plenna 7' },
+        { src: new URL('@/assets/images/8.png', import.meta.url).href, alt: 'Dashboard Plenna 8' },
       ],
       carouselInterval: null
     }
