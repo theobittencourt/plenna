@@ -19,7 +19,7 @@ model User {
   saldo                   Float     @default(0.00)
   totalTransacoes         Int       @default(0) @map("total_transacoes")
   avatar                  String?
-  status                  Boolean   @default(false)
+  status                  Boolean   @default(true)
   dataCadastro            DateTime  @default(now()) @map("data_cadastro")
   ipUser                  String?   @map("ip_user")
   transacoesAproved       Int       @default(0) @map("transacoes_aproved")

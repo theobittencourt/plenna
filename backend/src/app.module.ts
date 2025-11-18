@@ -10,7 +10,7 @@ import { WithdrawalsModule } from './withdrawals/withdrawals.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { AdquirentesModule } from './adquirentes/adquirentes.module';
 import { ProductsModule } from './products/products.module';
-import { TestModule } from './test/test.module';
+// import { TestModule } from './test/test.module';
 
 @Module({
   imports: [
@@ -28,7 +28,7 @@ import { TestModule } from './test/test.module';
     TransactionsModule,
     AdquirentesModule,
     ProductsModule,
-    TestModule,
+    // TestModule,
   ],
 })
 export class AppModule {}
